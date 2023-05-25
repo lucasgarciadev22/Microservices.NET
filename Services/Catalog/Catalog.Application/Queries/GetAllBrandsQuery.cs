@@ -1,10 +1,9 @@
 using Catalog.Application.Responses;
 using MediatR;
 
-namespace Catalog.Application.Queries
+namespace Catalog.Application.Queries;
+
+public class GetAllBrandsQuery : IRequest<IList<BrandResponse>>
 {
-  public class GetAllBrandsQuery : IRequest<IList<BrandResponse>>
-  {
-    //Query response model
-  }
+    
 }

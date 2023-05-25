@@ -3,10 +3,10 @@ using MediatR;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Catalog.Application.Commands
+namespace Catalog.Application.Commands;
+
+public class UpdateProductCommand : IRequest<bool>
 {
-  public class UpdateProductCommand : IRequest<bool>
-  {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; }
@@ -16,7 +16,6 @@ namespace Catalog.Application.Commands
     public string Description { get; set; }
     public string ImageFile { get; set; }
     public decimal Price { get; set; }
-    public ProductBrand Brand { get; set; }
-    public ProductType Type { get; set; }
-  }
+    public ProductBrand Brands { get; set; }
+    public ProductType Types { get; set; }
 }

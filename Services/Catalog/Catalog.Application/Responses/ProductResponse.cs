@@ -2,10 +2,10 @@ using Catalog.Core.Entities;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Catalog.Application.Responses
+namespace Catalog.Application.Responses;
+
+public class ProductResponse
 {
-  public class ProductResponse
-  {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; }
@@ -15,7 +15,6 @@ namespace Catalog.Application.Responses
     public string Description { get; set; }
     public string ImageFile { get; set; }
     public decimal Price { get; set; }
-    public ProductBrand Brands { get; set; }
-    public ProductType Types { get; set; }
-  }
+    public ProductBrand Brand { get; set; }
+    public ProductType Type { get; set; }
 }

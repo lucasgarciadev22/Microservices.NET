@@ -1,14 +1,13 @@
-﻿using MediatR;
+using MediatR;
 
-namespace Catalog.Application.Queries
+namespace Catalog.Application.Queries;
+
+public class DeleteProductByIdQuery : IRequest<bool>
 {
-    public class DeleteProductByIdQuery : IRequest<bool>
-    {
-        public string Id { get; set; }
+    public string Id { get; set; }
 
-        public DeleteProductByIdQuery(string id)
-        {
-            Id = id;
-        }
+    public DeleteProductByIdQuery(string id)
+    {
+        Id = id;
     }
 }

@@ -1,34 +1,30 @@
-﻿using Catalog.Application.Commands;
+using Catalog.Application.Commands;
 using Catalog.Application.Mappers;
 using Catalog.Application.Responses;
 using Catalog.Core.Entities;
 using Catalog.Core.Repositories;
 using MediatR;
 
-namespace Catalog.Application.Handlers
+namespace Catalog.Application.Handlers;
+
+public class CreateProductHandler : IRequestHandler<CreateProductCommand, ProductResponse>
 {
-    public class CreateProductHandler : IRequestHandler<CreateProductCommand, ProductResponse>
+    private readonly IProductRepository _productRepository;
+
+    public CreateProductHandler(IProductRepository productRepository)
     {
-        private readonly IProductRepository _productRepository;
-
-        public CreateProductHandler(IProductRepository productRepository)
+        _productRepository = productRepository;
+    }
+    public async Task<ProductResponse> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    {
+        var productEntity = ProductMapper.Mapper.Map<Product>(request);
+        if (productEntity is null)
         {
-            _productRepository = productRepository;
+            throw new ApplicationException("There is an issue with mapping while creating new product");
         }
 
-        public async Task<ProductResponse> Handle(CreateProductCommand request, CancellationToken cancellationToken)
-        {
-            var productEntity = ProductMapper.CurrentMap.Map<Product>(request);
-
-            if (productEntity is null)
-            {
-                throw new ApplicationException("There's a mapping issue while creating new product");
-            }
-
-            var product = await _productRepository.CreateProduct(productEntity);
-            var productResponse = ProductMapper.CurrentMap.Map<ProductResponse>(product);
-
-            return productResponse;
-        }
+        var newProduct = await _productRepository.CreateProduct(productEntity);
+        var productResponse = ProductMapper.Mapper.Map<ProductResponse>(newProduct);
+        return productResponse;
     }
 }

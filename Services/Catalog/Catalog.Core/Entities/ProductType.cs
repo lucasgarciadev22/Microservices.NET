@@ -1,7 +1,9 @@
-namespace Catalog.Core.Entities
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace Catalog.Core.Entities;
+
+public class ProductType : BaseEntity
 {
-    public class ProductType : BaseEntity
-    {
-        public string Name { get; set; }
-    }
+    [BsonElement("Name")]
+    public string Name { get; set; }
 }
