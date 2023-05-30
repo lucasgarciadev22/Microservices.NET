@@ -38,7 +38,7 @@ public class Startup
         //DI
         services.AddAutoMapper(typeof(Startup));
         services.AddMediatR(typeof(CreateProductHandler).GetTypeInfo().Assembly);
-        services.AddScoped<ICatalogContext, CatalogContext>();
+       services.AddScoped<ICatalogContext, CatalogContext>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IBrandRepository, ProductRepository>();
         services.AddScoped<ITypeRepository, ProductRepository>();

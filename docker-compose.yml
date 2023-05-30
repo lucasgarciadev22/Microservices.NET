@@ -1,0 +1,20 @@
+version: "3.4"
+
+# get mongo image and start registering of projetcs
+
+services:
+  catalogdb:
+    image: mongo
+
+# defines container context and add DOCKER_REGISTRY as part of image name
+
+  catalog.api:
+    image: ${DOCKER_REGISTRY-}catalogapi
+    build:
+      context: .
+      dockerfile: Services/Catalog/Catalog.API/Dockerfile
+
+# defines custom volumes from docker-compose.override
+
+volumes:
+  mongo_data:

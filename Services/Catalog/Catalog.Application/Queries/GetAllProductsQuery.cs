@@ -8,8 +8,8 @@ public class GetAllProductsQuery : IRequest<Pagination<ProductResponse>>
 {
     public CatalogSpecParams CatalogSpecParams { get; set; }
 
-    public GetAllProductsQuery(CatalogSpecParams catalogSpecParams)
+    public GetAllProductsQuery()
     {
-        CatalogSpecParams = catalogSpecParams;
+
     }
 }
