@@ -2,6 +2,9 @@ namespace Catalog.Core.Specs;
 
 public class CatalogSpecParams
 {
+    /// <summary>
+    /// Sorting and filtering specifications. Used to setup the pagination configs for Catalog...
+    /// </summary>
     private const int MaxPageSize = 70;
     public int PageIndex { get; set; } = 1;
     private int _pageSize = 10;

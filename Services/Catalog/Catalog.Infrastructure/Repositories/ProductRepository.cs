@@ -28,7 +28,7 @@ public class ProductRepository : IProductRepository, IBrandRepository, ITypeRepo
         if(!string.IsNullOrEmpty(catalogSpecParams.BrandId))
         {
             var brandFilter = builder.Eq(x => x.Brands.Id,catalogSpecParams.BrandId);
-            filter &= brandFilter;
+            filter &= brandFilter;//AND operator
         }
         if(!string.IsNullOrEmpty(catalogSpecParams.TypeId))
         {
