@@ -86,7 +86,7 @@ public class ProductRepository : IProductRepository, IBrandRepository, ITypeRepo
             default:
                 return await _context
                     .Products
-                    .Find(filter)
+                    .Find(filter) 
                     .Sort(Builders<Product>.Sort.Ascending("Name"))
                     .Skip(catalogSpecParams.PageSize * (catalogSpecParams.PageIndex - 1))
                     .Limit(catalogSpecParams.PageSize)
