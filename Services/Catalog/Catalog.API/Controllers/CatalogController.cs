@@ -1,4 +1,4 @@
-using Catalog.Application.Handlers;
+using Catalog.Application.Commands;
 using Catalog.Application.Queries;
 using Catalog.Application.Responses;
 using MediatR;
@@ -72,6 +72,34 @@ public class CatalogController : ApiController
     public async Task<ActionResult<IList<ProductResponse>>> GetProductByBrandName(string brandName)
     {
         var query = new GetProductByBrandQuery(brandName);
+        var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+
+    [HttpPost]
+    [Route("CreateProduct")]
+    [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult<ProductResponse>> CreateProduct([FromBody] CreateProductCommand productCommand)
+    {
+        var result = await _mediator.Send(productCommand);
+        return Ok(result);
+    }
+
+    [HttpPut]
+    [Route("UpdateProduct")]
+    [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult> UpdateProduct([FromBody] UpdateProductCommand productCommand)
+    {
+        var result = await _mediator.Send(productCommand);
+        return Ok(result);
+    }
+
+    [HttpDelete]
+    [Route("{id}", Name = "DeleteProduct")]
+    [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult> DeleteProduct(string id)
+    {
+        var query = new DeleteProductByIdQuery(id);
         var result = await _mediator.Send(query);
         return Ok(result);
     }
