@@ -6,7 +6,7 @@ namespace Basket.Application.Handlers
 {
     public class DeleteBasketByUserNameHandler : IRequestHandler<DeleteBasketByUserNameQuery>
     {
-        private readonly IBasketRepository _basketRepository;
+        private readonly IBasketRepository _basketRepository; 
 
         public DeleteBasketByUserNameHandler(IBasketRepository basketRepository)
         {
