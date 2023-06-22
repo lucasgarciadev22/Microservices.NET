@@ -1,4 +1,5 @@
-﻿using Basket.Application.Queries;
+﻿using Basket.Application.Mappers;
+using Basket.Application.Queries;
 using Basket.Application.Responses;
 using Basket.Core.Repositories;
 using MediatR;
@@ -16,7 +17,10 @@ namespace Basket.Application.Handlers
 
         public async Task<ShoppingCartResponse> Handle(GetBasketByUserNameQuery request, CancellationToken cancellationToken)
         {
-            var basket = await _basketRepository.GetBasket(request.UserName);
+            var shoppingCart = await _basketRepository.GetBasket(request.UserName);
+            var shoppingCartResponse = BasketMapper.Mapper.Map<ShoppingCartResponse>(shoppingCart);
+
+            return shoppingCartResponse;
         }
     }
 }

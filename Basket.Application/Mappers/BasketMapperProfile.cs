@@ -9,6 +9,7 @@ namespace Basket.Application.Mappers
         public BasketMapperProfile()
         {
             CreateMap<ShoppingCart, ShoppingCartResponse>().ReverseMap();
+            CreateMap<ShoppingCartItem, ShoppingCartItemResponse>().ReverseMap();
         }
     }
 }
