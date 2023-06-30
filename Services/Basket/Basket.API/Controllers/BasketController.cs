@@ -28,9 +28,8 @@ namespace Basket.API.Controllers
 
         [HttpPost("CreateBasket")]
         [ProducesResponseType(typeof(ShoppingCartResponse), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<ShoppingCartResponse>> UpdateBasket([FromBody] CreateShoppingCartCommand createShoppingCartCommand)
+        public async Task<ActionResult<ShoppingCartResponse>> CreateBasket([FromBody] CreateShoppingCartCommand createShoppingCartCommand)
         {
-
             var basket = await _mediator.Send(createShoppingCartCommand);
             return Ok(basket);
         }
