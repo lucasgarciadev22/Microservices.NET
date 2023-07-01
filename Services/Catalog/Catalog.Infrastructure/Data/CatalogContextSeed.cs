@@ -10,9 +10,7 @@ public class CatalogContextSeed
     {
         bool checkProducts = productCollection.Find(b => true).Any();
         string path = "../Catalog.Infrastructure/Data/SeedData/products.json";
-#if !DEBUG
-string path = Path.Combine("Data", "SeedData", "products.json");
-#endif
+
         if (!checkProducts)
         {
             var productsData = File.ReadAllText(path);
