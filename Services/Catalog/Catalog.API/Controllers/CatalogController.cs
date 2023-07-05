@@ -67,7 +67,7 @@ public class CatalogController : ApiController
     }
 
     [HttpGet]
-    [Route("[action]/{brandName}", Name = "GetProductByName")]
+    [Route("[action]/{brandName}", Name = "GetProductByBrandName")]
     [ProducesResponseType(typeof(IList<ProductResponse>), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<IList<ProductResponse>>> GetProductByBrandName(string brandName)
     {
