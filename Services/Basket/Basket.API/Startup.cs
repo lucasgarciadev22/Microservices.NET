@@ -22,21 +22,23 @@ namespace Basket.API
         {
             services.AddControllers();
             services.AddApiVersioning();
+            services.AddAuthorization();
+            //Healthcheckers settings
+            services.AddHealthChecks()
+                .AddRedis(Configuration["CacheSettings:ConnectionSettings"], "Redis Health", HealthStatus.Degraded);
             //Redis Settings
             services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = Configuration.GetValue<string>("CacheSettings:ConnectionString");
             });
             //MediaTr Settings
-            services.AddMediatR(typeof(CreateShoppingCartCommandHandler).GetType().Assembly);
-            services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddAutoMapper(typeof(Startup));
+            services.AddMediatR(typeof(CreateShoppingCartCommandHandler).GetType().Assembly);//register generic handler
+            services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo() { Title = "Basket.API", Version = "v1" });
             });
-            services.AddHealthChecks()
-                .AddRedis(Configuration["CacheSettings:ConnectionSettings"], "Redis Health", HealthStatus.Degraded);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -50,7 +52,8 @@ namespace Basket.API
 
             app.UseHttpsRedirection();
             app.UseRouting();
-            app.UseAuthorization();
+            //app.UseAuthorization();
+            //Registering endpoints
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -22,66 +22,37 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddControllers();
         services.AddApiVersioning();
-        // services.AddCors(options =>
-        // {
-        //     options.AddPolicy("CorsPolicy", policy =>
-        //     {
-        //         policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-        //     });
-        // });
+        services.AddAuthorization();
+        //Healthcheckers settings
         services.AddHealthChecks()
             .AddMongoDb(Configuration["DatabaseSettings:ConnectionString"], "Catalog  Mongo Db Health Check",
                 HealthStatus.Degraded);
-        services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Catalog.API", Version = "v1"}); });
-        
-        //DI
+        services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog.API", Version = "v1" }); });
+
+        //MediaTR settings
         services.AddAutoMapper(typeof(Startup));
-        services.AddMediatR(typeof(CreateProductHandler).GetTypeInfo().Assembly);
+        services.AddMediatR(typeof(CreateProductHandler).GetTypeInfo().Assembly);//register generic handler
         services.AddScoped<ICatalogContext, CatalogContext>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IBrandRepository, ProductRepository>();
         services.AddScoped<ITypeRepository, ProductRepository>();
-
-        services.AddControllers();
-        //Identity Server changes
-        // var userPolicy = new AuthorizationPolicyBuilder()
-        //     .RequireAuthenticatedUser()
-        //     .Build();
-        //
-        // services.AddControllers(config =>
-        // {
-        //     config.Filters.Add(new AuthorizeFilter(userPolicy));
-        // });
-        //
-        //
-        // services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        //         .AddJwtBearer(options =>
-        //         {
-        //             options.Authority = "https://localhost:9009";
-        //             options.Audience = "Catalog";
-        //         });
-        // services.AddAuthorization(options =>
-        // {
-        //     options.AddPolicy("CanRead", policy=>policy.RequireClaim("scope", "catalogapi.read"));
-        // });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         if (env.IsDevelopment())
         {
-            app.UseDeveloperExceptionPage();  
+            app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog.API v1"));
         }
 
-        app.UseHttpsRedirection();
         app.UseRouting();
-        // app.UseCors("CorsPolicy");
-        app.UseAuthentication();
         app.UseStaticFiles();
         app.UseAuthorization();
+        //Registering endpoints
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();

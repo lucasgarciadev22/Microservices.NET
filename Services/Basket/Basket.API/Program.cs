@@ -1,9 +1,13 @@
+using System.Diagnostics;
+
 namespace Basket.API;
 
 public class Program
 {
     public static void Main(string[] args)
     {
+        Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+
         CreateHostBuilder(args).Build().Run();
     }
 
