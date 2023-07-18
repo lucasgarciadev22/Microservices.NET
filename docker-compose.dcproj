@@ -7,7 +7,8 @@
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
   </PropertyGroup>
   <PropertyGroup>
-    <DockerTargetOS>Windows</DockerTargetOS>
+    <DockerTargetOS>
+    </DockerTargetOS>
     <DockerServiceName>eshopping-container</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
