@@ -15,7 +15,7 @@ namespace Discount.Infrastructure.Extensions
         /// <returns></returns>
         public static IHost MigratedDatabase<TContext>(this IHost host)
         {
-            using (var scope = host.Services.CreateScope()
+            using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 var config = services.GetRequiredService<IConfiguration>();
@@ -32,6 +32,8 @@ namespace Discount.Infrastructure.Extensions
                     throw;
                 }
             }
+
+            return host;
         }
 
         private static void ApplyMigration(IConfiguration config)
@@ -60,10 +62,6 @@ namespace Discount.Infrastructure.Extensions
             command.ExecuteNonQuery();
             command.CommandText = "INSERT INTO Coupon(ProductName,Description,Amount) VALUES ('Yonex VCORE Pro 100 A Tennis Racquet(270gm, Strung)', 'Racquet Discount', 700);";
             command.ExecuteNonQuery();
-
-
-
-
         }
     }
 }
