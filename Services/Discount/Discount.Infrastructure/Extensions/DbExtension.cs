@@ -19,7 +19,7 @@ namespace Discount.Infrastructure.Extensions
             {
                 var services = scope.ServiceProvider;
                 var config = services.GetRequiredService<IConfiguration>();
-                var logger = services.GetRequiredService<ILogger<TContext>>();//passes whatever the context as type
+                var logger = services.GetRequiredService<ILogger<TContext>>(); //passes whatever the context as type
                 try
                 {
                     logger.LogInformation("Discount DB Migration Started");
@@ -38,29 +38,32 @@ namespace Discount.Infrastructure.Extensions
 
         private static void ApplyMigration(IConfiguration config)
         {
-            using var connection = new NpgsqlConnection(config.GetValue<string>("DatabaseSettings:ConnectionString"));//get the connection string from JSON
+            using var connection = new NpgsqlConnection(
+                config.GetValue<string>("DatabaseSettings:ConnectionString")
+            ); //get the connection string from JSON
             connection.Open();
 
             //Create new command for managing the migration
-            using var command = new NpgsqlCommand()
-            {
-                Connection = connection,
-            };
-            
+
+            using var command = new NpgsqlCommand() { Connection = connection, };
+
             command.CommandText = "DROP TABLE IF EXISTS Coupon";
             command.ExecuteNonQuery();
-            
+
             // @ operator because is a multiliner command
-            command.CommandText = @"CREATE TABLE Coupon(Id SERIAL PRIMARY KEY,
+            command.CommandText =
+                @"CREATE TABLE Coupon(Id SERIAL PRIMARY KEY,
                                     ProductName VARCHAR(500) NOT NULL,
                                     Description TEXT,
                                     Amount INT)";
             command.ExecuteNonQuery();
 
             //Insert seed values into the Coupon table
-            command.CommandText = "INSERT INTO Coupon(ProductName,Description,Amount) VALUES ('Adidas Quick Force Indoor Badminton Shoes', 'Shoe Discount', 500);";
+            command.CommandText =
+                "INSERT INTO Coupon(ProductName,Description,Amount) VALUES ('Adidas Quick Force Indoor Badminton Shoes', 'Shoe Discount', 500);";
             command.ExecuteNonQuery();
-            command.CommandText = "INSERT INTO Coupon(ProductName,Description,Amount) VALUES ('Yonex VCORE Pro 100 A Tennis Racquet(270gm, Strung)', 'Racquet Discount', 700);";
+            command.CommandText =
+                "INSERT INTO Coupon(ProductName,Description,Amount) VALUES ('Yonex VCORE Pro 100 A Tennis Racquet(270gm, Strung)', 'Racquet Discount', 700);";
             command.ExecuteNonQuery();
         }
     }

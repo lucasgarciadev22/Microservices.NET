@@ -79,7 +79,9 @@ public class CatalogController : ApiController
     [HttpPost]
     [Route("CreateProduct")]
     [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
-    public async Task<ActionResult<ProductResponse>> CreateProduct([FromBody] CreateProductCommand productCommand)
+    public async Task<ActionResult<ProductResponse>> CreateProduct(
+        [FromBody] CreateProductCommand productCommand
+    )
     {
         var result = await _mediator.Send(productCommand);
         return Ok(result);
@@ -99,7 +101,7 @@ public class CatalogController : ApiController
     [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
     public async Task<ActionResult> DeleteProduct(string id)
     {
-        var query = new DeleteProductByIdQuery(id);
+        var query = new DeleteProductByIdCommand(id);
         var result = await _mediator.Send(query);
         return Ok(result);
     }

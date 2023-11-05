@@ -249,5 +249,6 @@
     "**/[Dd]esktop.ini": true,
     "**/$RECYCLE.BIN/": true,
     "**/*.lnk": true
-  }
+  },
+  "dotnet.defaultSolution": "EShopping.sln"
 }
