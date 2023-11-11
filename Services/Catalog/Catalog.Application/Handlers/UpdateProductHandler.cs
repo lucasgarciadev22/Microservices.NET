@@ -13,19 +13,25 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, bool>
     {
         _productRepository = productRepository;
     }
-    public async Task<bool> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+
+    public async Task<bool> Handle(
+        UpdateProductCommand request,
+        CancellationToken cancellationToken
+    )
     {
-        var productEntity = await _productRepository.UpdateProduct(new Product
-        {
-            Id = request.Id,
-            Description = request.Description,
-            ImageFile = request.ImageFile,
-            Name = request.Name,
-            Price = request.Price,
-            Summary = request.Summary,
-            Brands = request.Brands,
-            Types = request.Types
-        });
+        var productEntity = await _productRepository.UpdateProduct(
+            new Product
+            {
+                Id = request.Id,
+                Description = request.Description,
+                ImageFile = request.ImageFile,
+                Name = request.Name,
+                Price = request.Price,
+                Summary = request.Summary,
+                Brands = request.Brands,
+                Types = request.Types
+            }
+        );
         return productEntity;
     }
 }

@@ -3,37 +3,40 @@ using Basket.Core.Repositories;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 
-namespace Basket.Infrastructure.Repositories
+namespace Basket.Infrastructure.Repositories;
+
+public class BasketRepository : IBasketRepository
 {
-    public class BasketRepository : IBasketRepository
+    private readonly IDistributedCache _redisCache;
+
+    public BasketRepository(IDistributedCache redisCache)
     {
-        private readonly IDistributedCache _redisCache;
+        _redisCache = redisCache;
+    }
 
-        public BasketRepository(IDistributedCache redisCache)
-        {
-            _redisCache = redisCache;
-        }
-        public async Task DeleteBasket(string userName)
-        {
-            await _redisCache.RemoveAsync(userName);
-        }
+    public async Task DeleteBasket(string userName)
+    {
+        await _redisCache.RemoveAsync(userName);
+    }
 
-        public async Task<ShoppingCart> GetBasket(string userName)
+    public async Task<ShoppingCart> GetBasket(string userName)
+    {
+        var basket = await _redisCache.GetStringAsync(userName);
+        if (string.IsNullOrEmpty(basket))
         {
-            var basket = await _redisCache.GetStringAsync(userName);
-            if (string.IsNullOrEmpty(basket))
-            {
-                return null;
-            }
-
-            return JsonConvert.DeserializeObject<ShoppingCart>(basket);
+            return null;
         }
 
-        public async Task<ShoppingCart> UpdateBasket(ShoppingCart shoppingCart)
-        {
-            await _redisCache.SetStringAsync(shoppingCart.UserName, JsonConvert.SerializeObject(shoppingCart));
+        return JsonConvert.DeserializeObject<ShoppingCart>(basket);
+    }
 
-            return await GetBasket(shoppingCart.UserName);
-        }
+    public async Task<ShoppingCart> UpdateBasket(ShoppingCart shoppingCart)
+    {
+        await _redisCache.SetStringAsync(
+            shoppingCart.UserName,
+            JsonConvert.SerializeObject(shoppingCart)
+        );
+
+        return await GetBasket(shoppingCart.UserName);
     }
 }

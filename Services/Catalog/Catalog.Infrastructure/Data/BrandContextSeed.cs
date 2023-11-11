@@ -22,5 +22,5 @@ public static class BrandContextSeed
                 }
             }
         }
-    } 
+    }
 }

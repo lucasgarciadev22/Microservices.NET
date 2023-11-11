@@ -2,23 +2,22 @@
 using Discount.Core.Repositories;
 using MediatR;
 
-namespace Discount.Application.Handlers
+namespace Discount.Application.Handlers;
+
+internal class DeleteDiscountCommandHandler : IRequestHandler<DeleteDiscountCommand, bool>
 {
-    internal class DeleteDiscountCommandHandler : IRequestHandler<DeleteDiscountCommand, bool>
+    private readonly IDiscountRepository _discountRepository;
+
+    public DeleteDiscountCommandHandler(IDiscountRepository discountRepository)
     {
-        private readonly IDiscountRepository _discountRepository;
+        _discountRepository = discountRepository;
+    }
 
-        public DeleteDiscountCommandHandler(IDiscountRepository discountRepository)
-        {
-            _discountRepository = discountRepository;
-        }
-
-        public async Task<bool> Handle(
-            DeleteDiscountCommand request,
-            CancellationToken cancellationToken
-        )
-        {
-            return await _discountRepository.DeleteDiscount(request.ProductName);
-        }
+    public async Task<bool> Handle(
+        DeleteDiscountCommand request,
+        CancellationToken cancellationToken
+    )
+    {
+        return await _discountRepository.DeleteDiscount(request.ProductName);
     }
 }

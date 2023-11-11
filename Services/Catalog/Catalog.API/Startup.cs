@@ -26,14 +26,21 @@ public class Startup
         services.AddApiVersioning();
         services.AddAuthorization();
         //Healthcheckers settings
-        services.AddHealthChecks()
-            .AddMongoDb(Configuration["DatabaseSettings:ConnectionString"], "Catalog  Mongo Db Health Check",
-                HealthStatus.Degraded);
-        services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog.API", Version = "v1" }); });
+        services
+            .AddHealthChecks()
+            .AddMongoDb(
+                Configuration["DatabaseSettings:ConnectionString"],
+                "Catalog  Mongo Db Health Check",
+                HealthStatus.Degraded
+            );
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog.API", Version = "v1" });
+        });
 
         //MediaTR settings
         services.AddAutoMapper(typeof(Startup));
-        services.AddMediatR(typeof(CreateProductHandler).GetTypeInfo().Assembly);//register generic handler
+        services.AddMediatR(typeof(CreateProductHandler).GetTypeInfo().Assembly); //register generic handler
         services.AddScoped<ICatalogContext, CatalogContext>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IBrandRepository, ProductRepository>();
@@ -56,11 +63,14 @@ public class Startup
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
-            endpoints.MapHealthChecks("/health", new HealthCheckOptions()
-            {
-                Predicate = _ => true,
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-            });
+            endpoints.MapHealthChecks(
+                "/health",
+                new HealthCheckOptions()
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                }
+            );
         });
     }
 }

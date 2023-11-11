@@ -6,7 +6,4 @@ namespace Catalog.API.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 //[Authorize(Policy = "CanRead")]
-public class ApiController: ControllerBase
-{
-    
-}
+public class ApiController : ControllerBase { }

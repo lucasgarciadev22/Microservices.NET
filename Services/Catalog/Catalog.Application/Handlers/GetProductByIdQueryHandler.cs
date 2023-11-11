@@ -14,7 +14,11 @@ public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, P
     {
         _productRepository = productRepository;
     }
-    public async Task<ProductResponse> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
+
+    public async Task<ProductResponse> Handle(
+        GetProductByIdQuery request,
+        CancellationToken cancellationToken
+    )
     {
         var product = await _productRepository.GetProduct(request.Id);
         var productResponse = ProductMapper.Mapper.Map<ProductResponse>(product);

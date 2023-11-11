@@ -1,15 +1,14 @@
 ﻿using Basket.Application.Responses;
 using MediatR;
 
-namespace Basket.Application.Queries
-{
-    public class GetBasketByUserNameQuery : IRequest<ShoppingCartResponse>
-    {
-        public string  UserName { get; set; }
+namespace Basket.Application.Queries;
 
-        public GetBasketByUserNameQuery(string userName)
-        {
-            UserName = userName;
-        }
+public class GetBasketByUserNameQuery : IRequest<ShoppingCartResponse>
+{
+    public string UserName { get; set; }
+
+    public GetBasketByUserNameQuery(string userName)
+    {
+        UserName = userName;
     }
 }

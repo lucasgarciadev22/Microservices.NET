@@ -10,6 +10,7 @@ public class UpdateProductCommand : IRequest<bool>
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; }
+
     [BsonElement("Name")]
     public string Name { get; set; }
     public string Summary { get; set; }

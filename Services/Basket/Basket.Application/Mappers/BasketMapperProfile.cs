@@ -2,14 +2,13 @@
 using Basket.Application.Responses;
 using Basket.Core.Entities;
 
-namespace Basket.Application.Mappers
+namespace Basket.Application.Mappers;
+
+public class BasketMapperProfile : Profile
 {
-    public class BasketMapperProfile : Profile
+    public BasketMapperProfile()
     {
-        public BasketMapperProfile()
-        {
-            CreateMap<ShoppingCart, ShoppingCartResponse>().ReverseMap();
-            CreateMap<ShoppingCartItem, ShoppingCartItemResponse>().ReverseMap();
-        }
+        CreateMap<ShoppingCart, ShoppingCartResponse>().ReverseMap();
+        CreateMap<ShoppingCartItem, ShoppingCartItemResponse>().ReverseMap();
     }
 }

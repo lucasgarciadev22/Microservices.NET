@@ -1,14 +1,13 @@
 ﻿using MediatR;
 
-namespace Discount.Application.Commands
-{
-    internal class DeleteDiscountCommand : IRequest<bool>
-    {
-        public string ProductName { get; }
+namespace Discount.Application.Commands;
 
-        public DeleteDiscountCommand(string productName)
-        {
-            ProductName = productName;
-        }
+internal class DeleteDiscountCommand : IRequest<bool>
+{
+    public string ProductName { get; }
+
+    public DeleteDiscountCommand(string productName)
+    {
+        ProductName = productName;
     }
 }

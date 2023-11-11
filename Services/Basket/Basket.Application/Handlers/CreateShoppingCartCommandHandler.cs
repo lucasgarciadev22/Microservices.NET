@@ -5,29 +5,31 @@ using Basket.Core.Entities;
 using Basket.Core.Repositories;
 using MediatR;
 
-namespace Basket.Application.Handlers
+namespace Basket.Application.Handlers;
+
+public class CreateShoppingCartCommandHandler
+    : IRequestHandler<CreateShoppingCartCommand, ShoppingCartResponse>
 {
-    public class CreateShoppingCartCommandHandler : IRequestHandler<CreateShoppingCartCommand, ShoppingCartResponse>
+    private readonly IBasketRepository _basketRepository;
+
+    public CreateShoppingCartCommandHandler(IBasketRepository basketRepository)
     {
-        private readonly IBasketRepository _basketRepository;
+        _basketRepository = basketRepository;
+    }
 
-        public CreateShoppingCartCommandHandler(IBasketRepository basketRepository)
-        {
-            _basketRepository = basketRepository;
-        }
-        public async Task<ShoppingCartResponse> Handle(CreateShoppingCartCommand request, CancellationToken cancellationToken)
-        {
-            //TODO: Call discount and apply coupons
+    public async Task<ShoppingCartResponse> Handle(
+        CreateShoppingCartCommand request,
+        CancellationToken cancellationToken
+    )
+    {
+        //TODO: Call discount and apply coupons
 
-            var shoppingCart = await _basketRepository.UpdateBasket(new ShoppingCart
-            {
-                UserName = request.UserName,
-                Items = request.Items,
-            });
+        var shoppingCart = await _basketRepository.UpdateBasket(
+            new ShoppingCart { UserName = request.UserName, Items = request.Items, }
+        );
 
-            var shoppingCartResponse = BasketMapper.Mapper.Map<ShoppingCartResponse>(shoppingCart);
+        var shoppingCartResponse = BasketMapper.Mapper.Map<ShoppingCartResponse>(shoppingCart);
 
-            return shoppingCartResponse;
-        }
+        return shoppingCartResponse;
     }
 }

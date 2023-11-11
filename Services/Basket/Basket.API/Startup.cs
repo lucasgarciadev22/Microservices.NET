@@ -7,62 +7,71 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 
-namespace Basket.API
+namespace Basket.API;
+
+public class Startup
 {
-    public class Startup
+    public IConfiguration Configuration { get; set; }
+
+    public Startup(IConfiguration configuration)
     {
-        public IConfiguration Configuration { get; set; }
+        Configuration = configuration;
+    }
 
-        public Startup(IConfiguration configuration)
+    public void ConfigureService(IServiceCollection services)
+    {
+        services.AddControllers();
+        services.AddApiVersioning();
+        services.AddAuthorization();
+        //Healthcheckers settings
+        services
+            .AddHealthChecks()
+            .AddRedis(
+                Configuration["CacheSettings:ConnectionSettings"],
+                "Redis Health",
+                HealthStatus.Degraded
+            );
+        //Redis Settings
+        services.AddStackExchangeRedisCache(options =>
         {
-            Configuration = configuration;
+            options.Configuration = Configuration.GetValue<string>(
+                "CacheSettings:ConnectionString"
+            );
+        });
+        //MediaTr Settings
+        services.AddAutoMapper(typeof(Startup));
+        services.AddMediatR(typeof(CreateShoppingCartCommandHandler).GetType().Assembly); //register generic handler
+        services.AddScoped<IBasketRepository, BasketRepository>();
+        services.AddSwaggerGen(options =>
+        {
+            options.SwaggerDoc("v1", new OpenApiInfo() { Title = "Basket.API", Version = "v1" });
+        });
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basket.API v1"));
         }
 
-        public void ConfigureService(IServiceCollection services)
+        app.UseHttpsRedirection();
+        app.UseRouting();
+        //app.UseAuthorization();
+        //Registering endpoints
+        app.UseEndpoints(endpoints =>
         {
-            services.AddControllers();
-            services.AddApiVersioning();
-            services.AddAuthorization();
-            //Healthcheckers settings
-            services.AddHealthChecks()
-                .AddRedis(Configuration["CacheSettings:ConnectionSettings"], "Redis Health", HealthStatus.Degraded);
-            //Redis Settings
-            services.AddStackExchangeRedisCache(options =>
-            {
-                options.Configuration = Configuration.GetValue<string>("CacheSettings:ConnectionString");
-            });
-            //MediaTr Settings
-            services.AddAutoMapper(typeof(Startup));
-            services.AddMediatR(typeof(CreateShoppingCartCommandHandler).GetType().Assembly);//register generic handler
-            services.AddScoped<IBasketRepository, BasketRepository>();
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo() { Title = "Basket.API", Version = "v1" });
-            });
-        }
-
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basket.API v1"));
-            }
-
-            app.UseHttpsRedirection();
-            app.UseRouting();
-            //app.UseAuthorization();
-            //Registering endpoints
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-                endpoints.MapHealthChecks("/health", new HealthCheckOptions
+            endpoints.MapControllers();
+            endpoints.MapHealthChecks(
+                "/health",
+                new HealthCheckOptions
                 {
                     Predicate = _ => true,
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                });
-            });
-        }
+                }
+            );
+        });
     }
 }

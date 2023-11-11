@@ -15,12 +15,18 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Produc
     {
         _productRepository = productRepository;
     }
-    public async Task<ProductResponse> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+
+    public async Task<ProductResponse> Handle(
+        CreateProductCommand request,
+        CancellationToken cancellationToken
+    )
     {
         var productEntity = ProductMapper.Mapper.Map<Product>(request);
         if (productEntity is null)
         {
-            throw new ApplicationException("There is an issue with mapping while creating new product");
+            throw new ApplicationException(
+                "There is an issue with mapping while creating new product"
+            );
         }
 
         var newProduct = await _productRepository.CreateProduct(productEntity);
