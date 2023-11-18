@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Discount.Application.Handlers;
 
-internal class DeleteDiscountCommandHandler : IRequestHandler<DeleteDiscountCommand, bool>
+public class DeleteDiscountCommandHandler : IRequestHandler<DeleteDiscountCommand, bool>
 {
     private readonly IDiscountRepository _discountRepository;
 

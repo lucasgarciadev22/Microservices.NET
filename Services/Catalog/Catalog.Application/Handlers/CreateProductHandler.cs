@@ -21,14 +21,11 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Produc
         CancellationToken cancellationToken
     )
     {
-        var productEntity = ProductMapper.Mapper.Map<Product>(request);
-        if (productEntity is null)
-        {
-            throw new ApplicationException(
+        var productEntity =
+            ProductMapper.Mapper.Map<Product>(request)
+            ?? throw new ApplicationException(
                 "There is an issue with mapping while creating new product"
             );
-        }
-
         var newProduct = await _productRepository.CreateProduct(productEntity);
         var productResponse = ProductMapper.Mapper.Map<ProductResponse>(newProduct);
         return productResponse;

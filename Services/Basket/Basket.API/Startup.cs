@@ -2,7 +2,6 @@
 using Basket.Core.Repositories;
 using Basket.Infrastructure.Repositories;
 using HealthChecks.UI.Client;
-using MediatR;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
@@ -40,7 +39,11 @@ public class Startup
         });
         //MediaTr Settings
         services.AddAutoMapper(typeof(Startup));
-        services.AddMediatR(typeof(CreateShoppingCartCommandHandler).GetType().Assembly); //register generic handler
+
+        var mediatRCfg = new MediatRServiceConfiguration();
+        mediatRCfg.RegisterServicesFromAssembly(typeof(CreateShoppingCartCommandHandler).Assembly);
+        services.AddMediatR(mediatRCfg); //register generic handler
+
         services.AddScoped<IBasketRepository, BasketRepository>();
         services.AddSwaggerGen(options =>
         {

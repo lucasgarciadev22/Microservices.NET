@@ -3,8 +3,9 @@ using MediatR;
 
 namespace Discount.Application.Commands;
 
-internal class CreateDiscountCommand : IRequest<CouponModel>
+public class CreateDiscountCommand : IRequest<CouponModel>
 {
+    public int Id { get; set; }
     public string ProductName { get; set; }
     public string Description { get; set; }
     public int Amount { get; set; }

@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Discount.Application.Handlers;
 
-internal class GetDiscountQueryHandler : IRequestHandler<GetDiscountQuery, CouponModel>
+public class GetDiscountQueryHandler : IRequestHandler<GetDiscountQuery, CouponModel>
 {
     private readonly IDiscountRepository _discountRepository;
 

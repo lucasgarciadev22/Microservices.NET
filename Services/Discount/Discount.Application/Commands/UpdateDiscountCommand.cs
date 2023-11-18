@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Discount.Application.Commands;
 
-internal class UpdateDiscountCommand : IRequest<CouponModel>
+public class UpdateDiscountCommand : IRequest<CouponModel>
 {
     public int Id { get; set; }
     public string ProductName { get; set; }

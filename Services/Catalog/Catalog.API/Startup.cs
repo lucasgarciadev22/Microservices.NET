@@ -1,10 +1,8 @@
-using System.Reflection;
 using Catalog.Application.Handlers;
 using Catalog.Core.Repositories;
 using Catalog.Infrastructure.Data;
 using Catalog.Infrastructure.Repositories;
 using HealthChecks.UI.Client;
-using MediatR;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
@@ -40,11 +38,13 @@ public class Startup
 
         //MediaTR settings
         services.AddAutoMapper(typeof(Startup));
-        services.AddMediatR(typeof(CreateProductHandler).GetTypeInfo().Assembly); //register generic handler
         services.AddScoped<ICatalogContext, CatalogContext>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IBrandRepository, ProductRepository>();
         services.AddScoped<ITypeRepository, ProductRepository>();
+        services.AddMediatR(
+            cfg => cfg.RegisterServicesFromAssembly(typeof(CreateProductHandler).Assembly)
+        ); //register generic handler
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

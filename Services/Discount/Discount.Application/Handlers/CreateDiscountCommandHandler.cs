@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Discount.Application.Handlers;
 
-internal class CreateDiscountCommandHandler : IRequestHandler<CreateDiscountCommand, CouponModel>
+public class CreateDiscountCommandHandler : IRequestHandler<CreateDiscountCommand, CouponModel>
 {
     private readonly IDiscountRepository _discountRepository;
     private readonly IMapper _mapper;

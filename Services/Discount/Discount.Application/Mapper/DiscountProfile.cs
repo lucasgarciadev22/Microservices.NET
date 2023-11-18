@@ -4,7 +4,7 @@ using Discount.Grpc.Protos;
 
 namespace Discount.Application.Mapper;
 
-internal class DiscountProfile : Profile
+public class DiscountProfile : Profile
 {
     public DiscountProfile()
     {
