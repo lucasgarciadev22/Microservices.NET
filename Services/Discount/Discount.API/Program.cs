@@ -1,6 +1,18 @@
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+using Discount.Infrastructure.Extensions;
 
-app.MapGet("/", () => "Hello World!");
+namespace Discount.API;
 
-app.Run();
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        var host = CreateHostBuilder(args).Build();
+        host.MigratedDatabase<Program>();
+        host.Run();
+    }
+
+    private static IHostBuilder CreateHostBuilder(string[] args)
+    {
+        throw new NotImplementedException();
+    }
+}

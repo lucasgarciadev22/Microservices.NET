@@ -27,13 +27,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.Infrastructure", "Se
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Discount", "Discount", "{0C4923DD-B695-4EDE-96D7-284E87D4F43B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.API", "Services\Discount\Discount.API\Discount.API.csproj", "{0D767A56-1FDF-4A41-9E91-69224E5A9B5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discount.API", "Services\Discount\Discount.API\Discount.API.csproj", "{0D767A56-1FDF-4A41-9E91-69224E5A9B5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.Core", "Services\Discount\Discount.Core\Discount.Core.csproj", "{155632EA-D390-456F-A385-24D017F31594}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discount.Core", "Services\Discount\Discount.Core\Discount.Core.csproj", "{155632EA-D390-456F-A385-24D017F31594}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.Application", "Services\Discount\Discount.Application\Discount.Application.csproj", "{54410F6F-04B0-4057-A99A-DE25C876E4E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discount.Application", "Services\Discount\Discount.Application\Discount.Application.csproj", "{54410F6F-04B0-4057-A99A-DE25C876E4E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.Infrastructure", "Services\Discount\Discount.Infrastructure\Discount.Infrastructure.csproj", "{215BF5CB-6020-432B-AF75-113D2099FE1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discount.Infrastructure", "Services\Discount\Discount.Infrastructure\Discount.Infrastructure.csproj", "{215BF5CB-6020-432B-AF75-113D2099FE1E}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A92412CF-0A07-452C-9DCF-EF3F436F8FA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +91,10 @@ Global
 		{215BF5CB-6020-432B-AF75-113D2099FE1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{215BF5CB-6020-432B-AF75-113D2099FE1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{215BF5CB-6020-432B-AF75-113D2099FE1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A92412CF-0A07-452C-9DCF-EF3F436F8FA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A92412CF-0A07-452C-9DCF-EF3F436F8FA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A92412CF-0A07-452C-9DCF-EF3F436F8FA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A92412CF-0A07-452C-9DCF-EF3F436F8FA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
