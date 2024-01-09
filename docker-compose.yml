@@ -38,4 +38,4 @@ volumes:
   mongo_data:
   portainer_data:
   postgres_data:
-  postgres_admin:
+  pgadmin_data:

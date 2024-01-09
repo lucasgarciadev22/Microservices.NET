@@ -11,8 +11,10 @@ public class Program
         host.Run();
     }
 
-    private static IHostBuilder CreateHostBuilder(string[] args)
-    {
-        throw new NotImplementedException();
-    }
+    private static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            });
 }
