@@ -2,7 +2,10 @@
 using Basket.Core.Repositories;
 using Basket.Infrastructure.Repositories;
 using HealthChecks.UI.Client;
+using MassTransit;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 
@@ -17,12 +20,33 @@ public class Startup
         Configuration = configuration;
     }
 
-    public void ConfigureService(IServiceCollection services)
+    public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
-        services.AddApiVersioning();
+
+        //Versioning Settings
+        services.AddApiVersioning(options =>
+        {
+            options.AssumeDefaultVersionWhenUnspecified = true;
+            options.DefaultApiVersion = new ApiVersion(1, 0);
+            options.ReportApiVersions = true;
+        });
         services.AddAuthorization();
-        //Healthcheckers settings
+
+        //CORS Settings
+        services.AddCors(options =>
+        {
+            options.AddPolicy(
+                "CorsPolicy",
+                policy =>
+                {
+                    //TODO read the same from settings for prod deployment
+                    policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                }
+            );
+        });
+
+        //Healthcheckers Settings
         services
             .AddHealthChecks()
             .AddRedis(
@@ -30,6 +54,7 @@ public class Startup
                 "Redis Health",
                 HealthStatus.Degraded
             );
+
         //Redis Settings
         services.AddStackExchangeRedisCache(options =>
         {
@@ -37,13 +62,25 @@ public class Startup
                 "CacheSettings:ConnectionString"
             );
         });
-        //MediaTr Settings
-        services.AddAutoMapper(typeof(Startup));
 
+        //MediaTr Settings
         var mediatRCfg = new MediatRServiceConfiguration();
         mediatRCfg.RegisterServicesFromAssembly(typeof(CreateShoppingCartCommandHandler).Assembly);
         services.AddMediatR(mediatRCfg); //register generic handler
 
+        //MassTransit Settings
+        services.AddMassTransit(options =>
+        {
+            options.UsingRabbitMq(
+                (context, config) =>
+                {
+                    config.Host(Configuration["EventBusSettings:HostAddress"]);
+                }
+            );
+        });
+        services.AddMassTransitHostedService();
+
+        services.AddAutoMapper(typeof(Startup));
         services.AddScoped<IBasketRepository, BasketRepository>();
         services.AddSwaggerGen(options =>
         {
@@ -51,18 +88,34 @@ public class Startup
         });
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(
+        IApplicationBuilder app,
+        IWebHostEnvironment env,
+        IApiVersionDescriptionProvider provider
+    )
     {
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basket.API v1"));
+            app.UseSwaggerUI(options =>
+            {
+                foreach (var description in provider.ApiVersionDescriptions)
+                {
+                    options.SwaggerEndpoint(
+                        $"/swagger/{description.GroupName}/swagger.json",
+                        description.GroupName.ToUpperInvariant()
+                    );
+                }
+            });
         }
 
         app.UseHttpsRedirection();
         app.UseRouting();
-        //app.UseAuthorization();
+        app.UseCors("CorsPolicy");
+        app.UseAuthentication();
+        app.UseAuthorization();
+
         //Registering endpoints
         app.UseEndpoints(endpoints =>
         {
