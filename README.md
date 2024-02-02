@@ -1,1 +1,7 @@
-My main projects applying microservices and RabbitMQ with NetCore following Clean Architecture patterns
+## My main projects applying microservices with NetCore, following Clean Architecture patterns.
+- RabbitMQ
+- Redis
+- Docker
+- PostgreSQL
+- gRPC
+- And more!
