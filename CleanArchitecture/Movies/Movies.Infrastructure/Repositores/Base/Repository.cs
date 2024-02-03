@@ -8,7 +8,7 @@ namespace Movies.Infrastructure.Repositores.Base;
 public class Repository<T>(MovieContext movieContext) : IRepository<T>
     where T : Entity
 {
-    private readonly MovieContext _movieContext = movieContext;
+    protected readonly MovieContext _movieContext = movieContext;
 
     public async Task<IReadOnlyList<T>> GetAllAsync() => await _movieContext.Set<T>().ToListAsync();
 
