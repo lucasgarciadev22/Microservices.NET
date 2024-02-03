@@ -1,4 +1,4 @@
-﻿namespace Movies.Core.Base;
+﻿namespace Movies.Core.Entities.Base;
 
 public interface IEntityBase<TId>
 {
