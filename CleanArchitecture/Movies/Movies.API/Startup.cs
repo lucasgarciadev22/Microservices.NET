@@ -41,4 +41,14 @@ public class Startup(IConfiguration configuration)
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddTransient<IMovieRepository, MovieRepository>();
     }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+            app.UseDeveloperExceptionPage();
+
+        app.UseHttpsRedirection();
+        app.UseRouting();
+        app.UseAuthorization();
+    }
 }
