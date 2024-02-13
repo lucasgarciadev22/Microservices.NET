@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Movies.Application.Handlers;
+using Movies.Core.Repositories;
 using Movies.Core.Repositories.Base;
 using Movies.Infrastructure.Data;
+using Movies.Infrastructure.Repositores;
 using Movies.Infrastructure.Repositores.Base;
 
 namespace Movies.API;
@@ -37,5 +39,6 @@ public class Startup(IConfiguration configuration)
         );
 
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+        services.AddTransient<IMovieRepository, MovieRepository>();
     }
 }
