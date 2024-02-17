@@ -23,17 +23,21 @@ public class Repository<T>(MovieContext movieContext) : IRepository<T>
         return entity;
     }
 
-    public async Task UpdateAsync(T entity)
+    public async Task<bool> UpdateAsync(T entity)
     {
         _movieContext.Entry(entity).State = EntityState.Modified;
 
-        await _movieContext.SaveChangesAsync();
+        int updatedCount = await _movieContext.SaveChangesAsync();
+
+        return updatedCount > 0;
     }
 
-    public async Task DeleteAsync(T entity)
+    public async Task<bool> DeleteAsync(T entity)
     {
         _movieContext.Set<T>().Remove(entity);
 
-        await _movieContext.SaveChangesAsync();
+        int deletedCount = await _movieContext.SaveChangesAsync();
+
+        return deletedCount > 0;
     }
 }

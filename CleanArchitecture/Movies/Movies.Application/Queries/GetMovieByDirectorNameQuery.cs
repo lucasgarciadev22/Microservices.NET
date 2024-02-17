@@ -5,5 +5,5 @@ namespace Movies.Application.Queries;
 
 public class GetMovieByDirectorNameQuery(string directorName) : IRequest<IEnumerable<MovieResponse>>
 {
-    public string DirectorName { get; set; } = directorName;
+    public string DirectorName { get; } = directorName;
 }
