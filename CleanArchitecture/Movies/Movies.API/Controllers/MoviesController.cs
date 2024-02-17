@@ -14,7 +14,7 @@ public class MoviesController(IMediator mediator) : ApiController
     /// Obtém todos os filmes.
     /// </summary>
     /// <returns>Uma lista de todos os filmes.</returns>
-    [HttpGet]
+    [HttpGet("movies/")]
     [ProducesResponseType(typeof(IEnumerable<MovieResponse>), 200)]
     [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<MovieResponse>>> GetAllMovies()
@@ -30,7 +30,7 @@ public class MoviesController(IMediator mediator) : ApiController
     /// </summary>
     /// <param name="id">O id do filme no banco de dados.</param>
     /// <returns>O filme com o id correspondente</returns>
-    [HttpGet]
+    [HttpGet("/movies/{id}")]
     [ProducesResponseType(typeof(MovieResponse), 200)]
     [ProducesResponseType(404)]
     public async Task<ActionResult<MovieResponse>> GetMovieById(int id)
@@ -46,7 +46,7 @@ public class MoviesController(IMediator mediator) : ApiController
     /// </summary>
     /// <param name="directorName">O nome do diretor.</param>
     /// <returns>Uma lista de filmes correspondentes ao nome do diretor.</returns>
-    [HttpGet]
+    [HttpGet("movies/directors/{directorName}")]
     [ProducesResponseType(typeof(IEnumerable<MovieResponse>), 200)]
     [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<MovieResponse>>> GetMoviesByDirectorName(
@@ -65,7 +65,7 @@ public class MoviesController(IMediator mediator) : ApiController
     /// <param name="id">O ID do filme a ser atualizado.</param>
     /// <param name="command">Os dados para atualizar o filme.</param>
     /// <returns>True se foi atualizado, false se não</returns>
-    [HttpPut("{id}")]
+    [HttpPut("movies/update/{id}")]
     [ProducesResponseType(typeof(MovieResponse), 200)]
     [ProducesResponseType(400)]
     [ProducesResponseType(404)]
@@ -85,7 +85,7 @@ public class MoviesController(IMediator mediator) : ApiController
     /// </summary>
     /// <param name="id">O ID do filme a ser deletado.</param>
     /// <returns>True se foi deletado, false se não</returns>
-    [HttpDelete("{id}")]
+    [HttpDelete("movies/delete/{id}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> DeleteMovie(int id)

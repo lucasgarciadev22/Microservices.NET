@@ -1,3 +1,4 @@
+using dotenv.net;
 using Movies.API;
 using Movies.Infrastructure.Data;
 
@@ -9,7 +10,13 @@ host.Run();
 
 static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
-        .ConfigureAppConfiguration(config => config.AddEnvironmentVariables())
+        .ConfigureAppConfiguration(config =>
+        {
+            DotEnv.Load();
+
+            config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            config.AddEnvironmentVariables();
+        })
         .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
 
 static async Task CreateAndSeedDb(IHost host)

@@ -18,6 +18,8 @@ public class Startup(IConfiguration configuration)
         services.AddControllers();
         services.AddApiVersioning();
 
+        string c = _configuration.GetConnectionString("MoviesConnection"); //aqui estao erradas ainda
+
         services.AddDbContext<MovieContext>(
             options => options.UseSqlServer(_configuration.GetConnectionString("MoviesConnection")),
             ServiceLifetime.Singleton
@@ -54,8 +56,10 @@ public class Startup(IConfiguration configuration)
         app.UseEndpoints(endpoints => endpoints.MapControllers());
 
         app.UseSwagger();
-        app.UseSwaggerUI(
-            config => config.SwaggerEndpoint("/swagger/v1/swagger.json", "Movie Review API")
-        );
+        app.UseSwaggerUI(config =>
+        {
+            config.RoutePrefix = string.Empty;
+            config.SwaggerEndpoint("/swagger/v1/swagger.json", "Movie Review API");
+        });
     }
 }
