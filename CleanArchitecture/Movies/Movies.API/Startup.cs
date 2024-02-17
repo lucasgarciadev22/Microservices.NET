@@ -27,7 +27,7 @@ public class Startup(IConfiguration configuration)
         {
             config.SwaggerDoc(
                 name: "v1",
-                new OpenApiInfo() { Title = "Movie API Review", Version = "v1" }
+                new OpenApiInfo() { Title = "Movie Review API", Version = "v1" }
             );
         });
 
@@ -50,5 +50,12 @@ public class Startup(IConfiguration configuration)
         app.UseHttpsRedirection();
         app.UseRouting();
         app.UseAuthorization();
+
+        app.UseEndpoints(endpoints => endpoints.MapControllers());
+
+        app.UseSwagger();
+        app.UseSwaggerUI(
+            config => config.SwaggerEndpoint("/swagger/v1/swagger.json", "Movie Review API")
+        );
     }
 }

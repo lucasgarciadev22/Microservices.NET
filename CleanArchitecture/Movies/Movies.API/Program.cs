@@ -1,25 +1,36 @@
-var builder = WebApplication.CreateBuilder(args);
+using Movies.API;
+using Movies.Infrastructure.Data;
 
-// Add services to the container.
-builder.Services.AddRazorPages();
+IHost host = CreateHostBuilder(args).Build();
 
-var app = builder.Build();
+await CreateAndSeedDb(host);
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+host.Run();
+
+static IHostBuilder CreateHostBuilder(string[] args) =>
+    Host.CreateDefaultBuilder(args)
+        .ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseStartup<Startup>();
+        });
+
+static async Task CreateAndSeedDb(IHost host)
 {
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    using IServiceScope scope = host.Services.CreateScope();
+
+    IServiceProvider services = scope.ServiceProvider;
+    ILoggerFactory loggerFactory = services.GetRequiredService<ILoggerFactory>();
+
+    try
+    {
+        MovieContext moviesContext = services.GetRequiredService<MovieContext>();
+
+        await MovieContextSeed.SeedAsync(moviesContext, loggerFactory);
+    }
+    catch (Exception ex)
+    {
+        ILogger<Program> logger = loggerFactory.CreateLogger<Program>();
+
+        logger.LogError("Exception occured in API while starting:{Message}", ex.Message);
+    }
 }
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapRazorPages();
-
-app.Run();
