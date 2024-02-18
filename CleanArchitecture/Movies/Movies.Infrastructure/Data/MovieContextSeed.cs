@@ -29,7 +29,7 @@ public class MovieContextSeed
             if (retryForAvailability < 3)
             {
                 retryForAvailability++;
-                var log = loggerFactory.CreateLogger<MovieContextSeed>();
+                ILogger<MovieContextSeed> log = loggerFactory.CreateLogger<MovieContextSeed>();
 
                 log.LogError("Exception occured while connecting:{Message}", ex.Message);
 

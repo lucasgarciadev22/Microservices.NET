@@ -1,4 +1,4 @@
-using dotenv.net;
+using DotNetEnv;
 using Movies.API;
 using Movies.Infrastructure.Data;
 
@@ -12,9 +12,9 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
         .ConfigureAppConfiguration(config =>
         {
-            DotEnv.Load();
+            Env.Load();
 
-            config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
             config.AddEnvironmentVariables();
         })
         .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());

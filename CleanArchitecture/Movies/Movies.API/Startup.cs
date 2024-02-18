@@ -18,10 +18,10 @@ public class Startup(IConfiguration configuration)
         services.AddControllers();
         services.AddApiVersioning();
 
-        string c = _configuration.GetConnectionString("MoviesConnection"); //aqui estao erradas ainda
+        string connectionString = GetResolvedConnectionString();
 
         services.AddDbContext<MovieContext>(
-            options => options.UseSqlServer(_configuration.GetConnectionString("MoviesConnection")),
+            options => options.UseNpgsql(connectionString),
             ServiceLifetime.Singleton
         );
 
@@ -61,5 +61,19 @@ public class Startup(IConfiguration configuration)
             config.RoutePrefix = string.Empty;
             config.SwaggerEndpoint("/swagger/v1/swagger.json", "Movie Review API");
         });
+    }
+
+    private string GetResolvedConnectionString()
+    {
+        if (IsDevelopment())
+            return _configuration["DEV_CONNECTION_STRING"];
+
+        return _configuration["PROD_CONNECTION_STRING"];
+    }
+
+    private static bool IsDevelopment()
+    {
+        return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
+            == Environments.Development;
     }
 }

@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Application", "Movie
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Infrastructure", "Movies.Infrastructure\Movies.Infrastructure.csproj", "{EBD3A578-EE1A-48E5-8CAD-A45FC67D1762}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{6226DAB8-ADEE-4260-B86A-63FF52CD53FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{EBD3A578-EE1A-48E5-8CAD-A45FC67D1762}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBD3A578-EE1A-48E5-8CAD-A45FC67D1762}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBD3A578-EE1A-48E5-8CAD-A45FC67D1762}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6226DAB8-ADEE-4260-B86A-63FF52CD53FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6226DAB8-ADEE-4260-B86A-63FF52CD53FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6226DAB8-ADEE-4260-B86A-63FF52CD53FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6226DAB8-ADEE-4260-B86A-63FF52CD53FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

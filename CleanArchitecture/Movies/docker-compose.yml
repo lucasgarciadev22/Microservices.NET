@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  postgres.devdb:
+    image: postgres:latest
+    container_name: postgres.devdb
+    environment:
+      POSTGRES_DB: MoviesDbDev
+      POSTGRES_USER: ${DB_DEV_USER}
+      POSTGRES_PASSWORD: ${DB_DEV_PASSWORD}
+    ports:
+      - 5435:5432
+    volumes:
+      - ./.containers/movies-dev-db:/var/lib/postgresql/data
+
+  postgres.proddb:
+    image: postgres:latest
+    container_name: postgres.proddb
+    environment:
+      POSTGRES_DB: MoviesDbProd
+      POSTGRES_USER: ${DB_PROD_USER}
+      POSTGRES_PASSWORD: ${DB_PROD_PASSWORD}
+    ports:
+      - 5436:5432
+    volumes:
+      - ./.containers/movies-prod-db:/var/lib/postgresql/data
+
+  movies.api:
+    image: ${DOCKER_REGISTRY-}moviesapi
+    build:
+      context: .
+      dockerfile: Movies.API/Dockerfile
+    ports:
+    - "8000:8000"
+    - "8001:8001"
+    depends_on:
+      - postgres.devdb
+      - postgres.proddb
