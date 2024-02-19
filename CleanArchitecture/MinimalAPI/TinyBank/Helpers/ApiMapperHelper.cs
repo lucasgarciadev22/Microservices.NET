@@ -33,7 +33,7 @@ public static class ApiMapperHelper
 
                 dbContext.SaveChanges();
 
-                return Results.Ok(new { limit = client.Limit, balance = client.Balance });
+                return Results.Ok(new { limite = client.Limit, saldo = client.Balance });
             }
         );
 
@@ -44,24 +44,24 @@ public static class ApiMapperHelper
                 using var scope = app.Services.CreateScope();
                 var dbContext = scope.ServiceProvider.GetRequiredService<BankContext>();
 
-                var cliente = dbContext
+                var client = dbContext
                     .Clients.Include(c => c.Transactions)
                     .FirstOrDefault(c => c.Id == id);
 
-                if (cliente == null)
+                if (client == null)
                     return Results.NotFound();
 
-                var ultimasTransacoes = cliente
+                var lastTransactions = client
                     .Transactions.OrderByDescending(t => t.DoneAt)
                     .Take(10)
                     .ToList();
 
                 var response = new
                 {
-                    saldoTotal = cliente.Balance,
+                    saldoTotal = client.Balance,
                     data_extrato = DateTime.UtcNow,
-                    limite = cliente.Limit,
-                    ultimas_transacoes = ultimasTransacoes.Select(t => new
+                    limite = client.Limit,
+                    ultimas_transacoes = lastTransactions.Select(t => new
                     {
                         valor = t.Value,
                         tipo = t.Type.ToString().ToLower(),
