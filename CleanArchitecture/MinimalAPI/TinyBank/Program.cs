@@ -2,13 +2,24 @@ using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using TinyBank.Helpers;
 
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<BankContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DatabaseConnection"))
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<BankContext>(
+    options => options.UseNpgsql(builder.Configuration.GetConnectionString("DatabaseConnection"))
 );
 
-ApiMapperHelper.MapEndpoints(app);
+WebApplication app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+
+    app.Initialize();
+}
+
+app.MapMinimalEndpoints();
 
 app.Run();

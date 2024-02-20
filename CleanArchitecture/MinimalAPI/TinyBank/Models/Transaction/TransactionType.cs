@@ -1,7 +1,12 @@
+using System.ComponentModel;
+
 namespace TinyBank.Models.Transaction;
 
 public enum TransactionType
 {
-    Credit,
-    Debit
+    [Description("Credit")]
+    c,
+
+    [Description("Debit")]
+    d
 }
