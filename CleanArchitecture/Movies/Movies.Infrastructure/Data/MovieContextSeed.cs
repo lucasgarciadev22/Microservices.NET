@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Movies.Core.Entities;
 
 namespace Movies.Infrastructure.Data;
@@ -16,7 +17,7 @@ public class MovieContextSeed
         int retryForAvailability = retry;
         try
         {
-            await movieContext.Database.EnsureCreatedAsync();
+            movieContext.Database.Migrate();
 
             if (!movieContext.Movies.Any())
             {

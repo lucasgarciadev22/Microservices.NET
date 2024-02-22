@@ -53,6 +53,23 @@ services:
           cpus: "0.25"
           memory: "140MB"
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: c-pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_LISTEN_PORT=8082
+    ports:
+      - "8082:80"
+    networks:
+      - rinha-network
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "200MB"
+
 networks:
   rinha-network:
     driver: bridge

@@ -14,7 +14,7 @@ public class MoviesController(IMediator mediator) : ApiController
     /// Obtém todos os filmes.
     /// </summary>
     /// <returns>Uma lista de todos os filmes.</returns>
-    [HttpGet("movies/")]
+    [HttpGet("/movies")]
     [ProducesResponseType(typeof(IEnumerable<MovieResponse>), 200)]
     [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<MovieResponse>>> GetAllMovies()
@@ -46,7 +46,7 @@ public class MoviesController(IMediator mediator) : ApiController
     /// </summary>
     /// <param name="directorName">O nome do diretor.</param>
     /// <returns>Uma lista de filmes correspondentes ao nome do diretor.</returns>
-    [HttpGet("movies/directors/{directorName}")]
+    [HttpGet("/movies/directors/{directorName}")]
     [ProducesResponseType(typeof(IEnumerable<MovieResponse>), 200)]
     [ProducesResponseType(404)]
     public async Task<ActionResult<IEnumerable<MovieResponse>>> GetMoviesByDirectorName(
@@ -60,12 +60,30 @@ public class MoviesController(IMediator mediator) : ApiController
     }
 
     /// <summary>
+    /// Cria um novo filme.
+    /// </summary>
+    /// <param name="command">Os dados para criar o filme.</param>
+    /// <returns>O filme recém criado</returns>
+    [HttpPost("/movies/create")]
+    [ProducesResponseType(typeof(MovieResponse), 200)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(404)]
+    public async Task<ActionResult<MovieResponse>> CreateMovie(
+        [FromBody] CreateMovieCommand command
+    )
+    {
+        MovieResponse result = await _mediator.Send(command);
+
+        return Ok(result);
+    }
+
+    /// <summary>
     /// Atualiza um filme existente.
     /// </summary>
     /// <param name="id">O ID do filme a ser atualizado.</param>
     /// <param name="command">Os dados para atualizar o filme.</param>
     /// <returns>True se foi atualizado, false se não</returns>
-    [HttpPut("movies/update/{id}")]
+    [HttpPut("/movies/update/{id}")]
     [ProducesResponseType(typeof(MovieResponse), 200)]
     [ProducesResponseType(400)]
     [ProducesResponseType(404)]
@@ -85,7 +103,7 @@ public class MoviesController(IMediator mediator) : ApiController
     /// </summary>
     /// <param name="id">O ID do filme a ser deletado.</param>
     /// <returns>True se foi deletado, false se não</returns>
-    [HttpDelete("movies/delete/{id}")]
+    [HttpDelete("/movies/delete/{id}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> DeleteMovie(int id)

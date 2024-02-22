@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Movies.Core.Entities.Base;
 using Movies.Core.Repositories.Base;
-using Movies.Infrastructure.Data;
 
 namespace Movies.Infrastructure.Repositores.Base;
 
@@ -10,7 +9,7 @@ public class Repository<T>(MovieContext movieContext) : IRepository<T>
 {
     protected readonly MovieContext _movieContext = movieContext;
 
-    public async Task<IReadOnlyList<T>> GetAllAsync() => await _movieContext.Set<T>().ToListAsync();
+    public async Task<IEnumerable<T>> GetAllAsync() => await _movieContext.Set<T>().ToListAsync();
 
     public async Task<T> GetByIdAsync(int id) => await _movieContext.Set<T>().FindAsync(id);
 
@@ -25,7 +24,7 @@ public class Repository<T>(MovieContext movieContext) : IRepository<T>
 
     public async Task<bool> UpdateAsync(T entity)
     {
-        _movieContext.Entry(entity).State = EntityState.Modified;
+        _movieContext.Update(entity);
 
         int updatedCount = await _movieContext.SaveChangesAsync();
 

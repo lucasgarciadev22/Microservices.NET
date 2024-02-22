@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  tinybank:
+  tinybank1:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080

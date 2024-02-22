@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Movies.Application.Mappers;
 using Movies.Application.Queries;
 using Movies.Application.Responses;
 using Movies.Core.Repositories;
@@ -15,8 +16,9 @@ public class GetAllMoviesQueryHandler(IMovieRepository movieRepository)
         CancellationToken cancellationToken
     )
     {
-        IEnumerable<MovieResponse> movies =
-            (IEnumerable<MovieResponse>)await _movieRepository.GetAllAsync();
+        IEnumerable<MovieResponse> movies = MovieMapper.Mapper.Map<IEnumerable<MovieResponse>>(
+            await _movieRepository.GetAllAsync()
+        );
 
         return movies;
     }

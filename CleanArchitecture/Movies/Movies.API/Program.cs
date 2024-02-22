@@ -2,6 +2,8 @@ using DotNetEnv;
 using Movies.API;
 using Movies.Infrastructure.Data;
 
+Env.Load();
+
 IHost host = CreateHostBuilder(args).Build();
 
 await CreateAndSeedDb(host);
@@ -12,9 +14,6 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
         .ConfigureAppConfiguration(config =>
         {
-            Env.Load();
-
-            config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
             config.AddEnvironmentVariables();
         })
         .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());

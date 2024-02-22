@@ -3,7 +3,6 @@ using Microsoft.OpenApi.Models;
 using Movies.Application.Handlers;
 using Movies.Core.Repositories;
 using Movies.Core.Repositories.Base;
-using Movies.Infrastructure.Data;
 using Movies.Infrastructure.Repositores;
 using Movies.Infrastructure.Repositores.Base;
 
