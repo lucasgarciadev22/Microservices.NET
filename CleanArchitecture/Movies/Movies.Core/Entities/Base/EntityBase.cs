@@ -2,5 +2,5 @@
 
 public abstract class EntityBase<TId> : IEntityBase<TId>
 {
-    public TId Id { get; set; }
+    public TId Id { get; protected set; }
 }
