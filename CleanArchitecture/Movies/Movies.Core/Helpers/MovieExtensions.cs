@@ -9,6 +9,7 @@ public static class MovieExtensions
         updatingMovie.Title = updateMovieRequest.Title;
         updatingMovie.DirectorName = updateMovieRequest.DirectorName;
         updatingMovie.ReleaseYear = updateMovieRequest.ReleaseYear;
+        updatingMovie.Duration = updateMovieRequest.Duration;
 
         return updatingMovie;
     }

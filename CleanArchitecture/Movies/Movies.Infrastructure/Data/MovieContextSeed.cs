@@ -18,7 +18,6 @@ public class MovieContextSeed
         try
         {
             movieContext.Database.Migrate();
-
             if (!movieContext.Movies.Any())
             {
                 movieContext.Movies.AddRange(GetMovies());

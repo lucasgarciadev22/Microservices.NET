@@ -20,7 +20,13 @@ public class Startup(IConfiguration configuration)
         string connectionString = GetResolvedConnectionString();
 
         services.AddDbContext<MovieContext>(
-            options => options.UseNpgsql(connectionString),
+            options =>
+            {
+                options.UseNpgsql(
+                    connectionString,
+                    builder => builder.MigrationsAssembly("Movies.Infrastructure")
+                );
+            },
             ServiceLifetime.Singleton
         );
 

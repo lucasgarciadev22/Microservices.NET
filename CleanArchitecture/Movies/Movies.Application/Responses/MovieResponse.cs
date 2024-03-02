@@ -6,4 +6,5 @@ public class MovieResponse
     public string Title { get; set; } = null!;
     public string DirectorName { get; set; } = null!;
     public string ReleaseYear { get; set; } = null!;
+    public int Duration { get; set; }
 }

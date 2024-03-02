@@ -15,6 +15,7 @@ public class MovieMappingProfile : Profile
             .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
             .ForMember(dest => dest.DirectorName, opt => opt.MapFrom(src => src.DirectorName))
             .ForMember(dest => dest.ReleaseYear, opt => opt.MapFrom(src => src.ReleaseYear))
+            .ForMember(dest => dest.Duration, opt => opt.MapFrom(src => src.Duration))
             .ReverseMap();
     }
 }
