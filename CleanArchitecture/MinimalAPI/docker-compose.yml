@@ -9,10 +9,10 @@ services:
       context: TinyBank
       dockerfile: Dockerfile
     environment:
-      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_ENVIRONMENT: Development
       HTTP_PORT: 8080
     depends_on:
-      - postgresdb
+      -  postgres.server
     networks:
       - rinha-network
     deploy:
@@ -26,7 +26,7 @@ services:
     container_name: c-tinybank2.api
     hostname: tinybank2
     environment:
-      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_ENVIRONMENT: Development
       HTTP_PORT: 8081
 
   nginx:
@@ -44,15 +44,15 @@ services:
           cpus: "0.2"
           memory: "20MB"
 
-  postgresdb:
+  postgres.server:
     image: postgres:latest
-    container_name: c-postgresdb
+    container_name: c-postgres.db
     environment:
-      - POSTGRES_PASSWORD=admin@123
-      - POSTGRES_USER=admin
-      - POSTGRES_DB=rinhadb
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: rinhadb
     ports:
-      - "5432:5432"
+      - "5434:5432"
     volumes:
       - ./data:/var/lib/postgresql/data
     command: postgres -c checkpoint_timeout=600 -c max_wal_size=4096 -c synchronous_commit=0 -c full_page_writes=0
