@@ -1,3 +1,18 @@
-﻿namespace TinyBank.Models.Transaction;
+﻿using System.Text.Json.Serialization;
 
-public record TransactionResult(int Limit, int Balance);
+namespace TinyBank.Models.Transaction;
+
+public sealed record TransactionResult
+{
+    [JsonPropertyName("limite")]
+    public int Limit { get; init; }
+
+    [JsonPropertyName("saldo")]
+    public int Balance { get; init; }
+
+    public TransactionResult(int limit, int balance)
+    {
+        Limit = limit;
+        Balance = balance;
+    }
+}

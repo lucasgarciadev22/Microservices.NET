@@ -21,7 +21,7 @@ public static class DatabaseHelper
         // Injeção de dados usando SQL raw
         string query =
             @"
-            INSERT INTO Clientes (Id, Limite, Saldo)
+            INSERT INTO clientes (id, limite, saldo)
             VALUES (1, 100000, 0),
                    (2, 80000, 0),
                    (3, 1000000, 0),
@@ -46,7 +46,7 @@ public static class DatabaseHelper
         using BankContext dbContext = scope.ServiceProvider.GetRequiredService<BankContext>();
 
         return await dbContext.Clients
-                .FromSqlRaw("SELECT * FROM Clients WHERE Id = {0}", id)
+                .FromSqlRaw("SELECT * FROM clientes WHERE id = {0}", id)
                 .FirstOrDefaultAsync()
             ?? throw new NullReferenceException("Cliente não encontrado!");
     }
@@ -61,7 +61,7 @@ public static class DatabaseHelper
 
         return await dbContext.Transactions
             .FromSqlRaw(
-                "SELECT * FROM Transactions WHERE ClientId = {0} ORDER BY DoneAt DESC LIMIT 10",
+                "SELECT * FROM transacoes WHERE id = {0} ORDER BY realizado_em DESC LIMIT 10",
                 clientId
             )
             .ToListAsync();
