@@ -10,7 +10,7 @@ public static class DatabaseHelper
     public static bool CanWithdraw(BankTransaction transaction, Client client) =>
         transaction.Type == TransactionType.d && client.Balance - transaction.Value < -client.Limit;
 
-    public static void Initialize(this IApplicationBuilder app)
+    public static void InitializeDatabase(this IApplicationBuilder app)
     {
         using IServiceScope scope = app.ApplicationServices.CreateScope();
 

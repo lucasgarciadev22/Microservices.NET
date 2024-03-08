@@ -18,6 +18,7 @@ data
 
 # Mono auto generated files
 mono_crash.*
+.containers
 
 # Build results
 [Dd]ebug/

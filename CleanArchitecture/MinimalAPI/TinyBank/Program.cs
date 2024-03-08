@@ -17,7 +17,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 
-    app.Initialize();
+    app.InitializeDatabase();
 }
 
 app.MapMinimalEndpoints();
