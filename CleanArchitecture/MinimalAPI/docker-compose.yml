@@ -1,21 +1,24 @@
 version: "3.8"
 
 services:
+
   api01: &api
-    image: tinybank-rinha-challenge:latest
+    image: lucasgarciadev22/tinybank:latest
     container_name: c-tinybank1.api
     hostname: api01
     build:
       context: .
       dockerfile: TinyBank/Dockerfile
     environment:
+      - ASPNETCORE_ENVIRONMENT=Development 
       - DB_HOSTNAME=postgres.server
-      - server.port=8080
     ports:
-    - "8080:8080"
-
+      - "5000:8080"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
     depends_on:
-      -  postgres.server
+      - postgres.server
     networks:
       - rinha-network
     deploy:
@@ -29,10 +32,7 @@ services:
     container_name: c-tinybank2.api
     hostname: api02
     ports:
-    - "8081:8081"
-    environment:
-      - DB_HOSTNAME=postgres.server
-      - server.port=8081
+      - "5001:8080"
 
   nginx:
     image: nginx:latest
@@ -78,7 +78,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: admin@example.com
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
-      - "8080:80"
+      - "9000:80"
     depends_on:
       - postgres.server
     networks:

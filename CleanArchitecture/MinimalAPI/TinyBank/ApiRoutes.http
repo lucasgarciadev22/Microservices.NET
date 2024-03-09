@@ -1,0 +1,11 @@
+@Rinha.Backend_HostAddress = http://localhost:7000
+
+GET {{Rinha.Backend_HostAddress}}/home/
+Accept: application/json
+
+###
+
+GET {{Rinha.Backend_HostAddress}}/home/1
+Accept: application/json
+
+###
