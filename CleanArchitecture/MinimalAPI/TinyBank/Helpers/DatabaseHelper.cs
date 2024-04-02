@@ -10,13 +10,13 @@ public static class DatabaseHelper
     public static bool CanWithdraw(BankTransaction transaction, Client client) =>
         transaction.Type == TransactionType.d && client.Balance - transaction.Value < -client.Limit;
 
-    public static void InitializeDatabase(this IApplicationBuilder app)
+    public static async void InitializeDatabase(this IApplicationBuilder app)
     {
         using IServiceScope scope = app.ApplicationServices.CreateScope();
 
         using BankContext dbContext = scope.ServiceProvider.GetRequiredService<BankContext>();
 
-        dbContext.Database.Migrate();
+        await dbContext.Database.MigrateAsync();
 
         // Injeção de dados usando SQL raw
         string query =

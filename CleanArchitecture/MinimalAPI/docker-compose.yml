@@ -2,13 +2,27 @@ version: "3.8"
 
 services:
 
-  api01: &api
-    image: lucasgarciadev22/tinybank:latest
-    container_name: c-tinybank1.api
-    hostname: api01
+  build-and-push:
     build:
       context: .
       dockerfile: TinyBank/Dockerfile
+      args:
+        IMAGE_TAG: lucasgarciadev22/tinybank:latest
+    image: lucasgarciadev22/tinybank:latest
+    container_name: build-and-push
+    command: sh -c "docker push lucasgarciadev22/tinybank:latest"
+    networks:
+      - rinha-network
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: "50MB"
+
+  api01:
+    image: lucasgarciadev22/tinybank:latest
+    container_name: c-tinybank1.api
+    hostname: api01
     environment:
       - ASPNETCORE_ENVIRONMENT=Development 
       - DB_HOSTNAME=postgres.server
@@ -28,11 +42,26 @@ services:
           memory: "200MB"
 
   api02:
-    <<: *api
+    image: lucasgarciadev22/tinybank:latest
     container_name: c-tinybank2.api
     hostname: api02
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development 
+      - DB_HOSTNAME=postgres.server
     ports:
       - "5001:8080"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    depends_on:
+      - postgres.server
+    networks:
+      - rinha-network
+    deploy:
+      resources:
+        limits:
+          cpus: "0.55"
+          memory: "200MB"
 
   nginx:
     image: nginx:latest
