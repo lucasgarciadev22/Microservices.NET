@@ -1,6 +1,8 @@
-﻿using Basket.Application.Handlers;
+﻿using Basket.Application.GrpcService;
+using Basket.Application.Handlers;
 using Basket.Core.Repositories;
 using Basket.Infrastructure.Repositories;
+using Discount.Grpc.Protos;
 using HealthChecks.UI.Client;
 using MassTransit;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -63,8 +65,14 @@ public class Startup
             );
         });
 
+        //gRPC Settings
+        services.AddScoped<DiscountGrpcService>();
+        services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
+            o => o.Address = new Uri(Configuration["GrpcSettings:DiscountUrl"])
+        );
+
         //MediaTr Settings
-        var mediatRCfg = new MediatRServiceConfiguration();
+        MediatRServiceConfiguration mediatRCfg = new MediatRServiceConfiguration();
         mediatRCfg.RegisterServicesFromAssembly(typeof(CreateShoppingCartCommandHandler).Assembly);
         services.AddMediatR(mediatRCfg); //register generic handler
 
@@ -100,7 +108,7 @@ public class Startup
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                foreach (var description in provider.ApiVersionDescriptions)
+                foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
                 {
                     options.SwaggerEndpoint(
                         $"/swagger/{description.GroupName}/swagger.json",
