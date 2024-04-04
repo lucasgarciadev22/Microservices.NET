@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace Basket.API;
 
@@ -72,8 +73,10 @@ public class Startup
         );
 
         //MediaTr Settings
-        MediatRServiceConfiguration mediatRCfg = new MediatRServiceConfiguration();
-        mediatRCfg.RegisterServicesFromAssembly(typeof(CreateShoppingCartCommandHandler).Assembly);
+        MediatRServiceConfiguration mediatRCfg = new();
+        mediatRCfg.RegisterServicesFromAssembly(
+            typeof(CreateShoppingCartCommandHandler).GetTypeInfo().Assembly
+        );
         services.AddMediatR(mediatRCfg); //register generic handler
 
         //MassTransit Settings

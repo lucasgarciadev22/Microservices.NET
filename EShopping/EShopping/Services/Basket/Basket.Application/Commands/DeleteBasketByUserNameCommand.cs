@@ -2,7 +2,7 @@
 
 namespace Basket.Application.Commands;
 
-public class DeleteBasketByUserNameCommand : IRequest
+public class DeleteBasketByUserNameCommand : IRequest<Unit>
 {
     public string UserName { get; set; }
 
