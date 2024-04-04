@@ -2,6 +2,7 @@
 using Discount.Application.Handlers;
 using Discount.Core.Repositories;
 using Discount.Infrastructure.Repositories;
+using System.Reflection;
 
 namespace Discount.API;
 
@@ -10,8 +11,12 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddMediatR(
-            cfg => cfg.RegisterServicesFromAssembly(typeof(CreateDiscountCommandHandler).Assembly)
+            cfg =>
+                cfg.RegisterServicesFromAssembly(
+                    typeof(CreateDiscountCommandHandler).GetTypeInfo().Assembly
+                )
         );
+
         services.AddScoped<IDiscountRepository, DiscountRepository>();
         services.AddAutoMapper(typeof(Startup));
         services.AddGrpc();

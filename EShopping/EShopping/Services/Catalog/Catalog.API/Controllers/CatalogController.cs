@@ -21,8 +21,8 @@ public class CatalogController : ApiController
     [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<ProductResponse>> GetProductById(string productId)
     {
-        var query = new GetProductByIdQuery(productId);
-        var result = await _mediator.Send(query);
+        GetProductByIdQuery query = new(productId);
+        ProductResponse result = await _mediator.Send(query);
         return Ok(result);
     }
 
@@ -31,8 +31,8 @@ public class CatalogController : ApiController
     [ProducesResponseType(typeof(IList<ProductResponse>), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<IList<ProductResponse>>> GetProductByName(string productName)
     {
-        var query = new GetProductByNameQuery(productName);
-        var result = await _mediator.Send(query);
+        GetProductByNameQuery query = new(productName);
+        IList<ProductResponse> result = await _mediator.Send(query);
         return Ok(result);
     }
 
@@ -41,8 +41,8 @@ public class CatalogController : ApiController
     [ProducesResponseType(typeof(IList<ProductResponse>), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<IList<ProductResponse>>> GetAllProducts()
     {
-        var query = new GetAllProductsQuery();
-        var result = await _mediator.Send(query);
+        GetAllProductsQuery query = new();
+        Core.Specs.Pagination<ProductResponse> result = await _mediator.Send(query);
         return Ok(result);
     }
 
@@ -51,8 +51,8 @@ public class CatalogController : ApiController
     [ProducesResponseType(typeof(IList<ProductResponse>), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<IList<ProductResponse>>> GetAllBrands()
     {
-        var query = new GetAllBrandsQuery();
-        var result = await _mediator.Send(query);
+        GetAllBrandsQuery query = new();
+        IList<BrandResponse> result = await _mediator.Send(query);
         return Ok(result);
     }
 
@@ -61,8 +61,8 @@ public class CatalogController : ApiController
     [ProducesResponseType(typeof(IList<ProductResponse>), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<IList<ProductResponse>>> GetAllTypes()
     {
-        var query = new GetAllTypesQuery();
-        var result = await _mediator.Send(query);
+        GetAllTypesQuery query = new();
+        IList<TypeResponse> result = await _mediator.Send(query);
         return Ok(result);
     }
 
@@ -71,8 +71,8 @@ public class CatalogController : ApiController
     [ProducesResponseType(typeof(IList<ProductResponse>), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<IList<ProductResponse>>> GetProductByBrandName(string brandName)
     {
-        var query = new GetProductByBrandQuery(brandName);
-        var result = await _mediator.Send(query);
+        GetProductByBrandQuery query = new(brandName);
+        IList<ProductResponse> result = await _mediator.Send(query);
         return Ok(result);
     }
 
@@ -83,7 +83,7 @@ public class CatalogController : ApiController
         [FromBody] CreateProductCommand productCommand
     )
     {
-        var result = await _mediator.Send(productCommand);
+        ProductResponse result = await _mediator.Send(productCommand);
         return Ok(result);
     }
 
@@ -92,7 +92,7 @@ public class CatalogController : ApiController
     [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
     public async Task<ActionResult> UpdateProduct([FromBody] UpdateProductCommand productCommand)
     {
-        var result = await _mediator.Send(productCommand);
+        bool result = await _mediator.Send(productCommand);
         return Ok(result);
     }
 
@@ -101,8 +101,8 @@ public class CatalogController : ApiController
     [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
     public async Task<ActionResult> DeleteProduct(string id)
     {
-        var query = new DeleteProductByIdCommand(id);
-        var result = await _mediator.Send(query);
+        DeleteProductByIdCommand query = new(id);
+        bool result = await _mediator.Send(query);
         return Ok(result);
     }
 }

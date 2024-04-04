@@ -33,12 +33,6 @@ public class Startup
             options.AssumeDefaultVersionWhenUnspecified = true;
             options.DefaultApiVersion = new ApiVersion(1, 0);
             options.ReportApiVersions = true;
-            //Enable when required
-            // options.ApiVersionReader = ApiVersionReader.Combine(
-            //         new HeaderApiVersionReader("X-Version"),
-            //         new QueryStringApiVersionReader("api-version", "ver"),
-            //         new MediaTypeApiVersionReader("ver")
-            //     );
         });
         services.AddVersionedApiExplorer(options =>
         {
@@ -57,6 +51,7 @@ public class Startup
                 );
             });
         });
+
         services.AddAuthorization();
 
         //CORS Settings
@@ -113,25 +108,11 @@ public class Startup
             );
         });
         services.AddMassTransitHostedService();
-        //Identity Server changes
-        // var userPolicy = new AuthorizationPolicyBuilder()
-        //     .RequireAuthenticatedUser()
-        //     .Build();
-        //
-        // services.AddControllers(config =>
-        // {
-        //     config.Filters.Add(new AuthorizeFilter(userPolicy));
-        // });
-        //
-        // services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        //     .AddJwtBearer(options =>
-        //     {
-        //         options.Authority = "https://localhost:9009";
-        //         options.Audience = "Basket";
-        //     });
 
         services.AddAutoMapper(typeof(Startup));
         services.AddScoped<IBasketRepository, BasketRepository>();
+
+        //Swagger Settings
         services.AddSwaggerGen(options =>
         {
             options.SwaggerDoc("v1", new OpenApiInfo() { Title = "Basket.API", Version = "v1" });
