@@ -20,7 +20,7 @@ public class BasketController : ApiController
     }
 
     [HttpGet]
-    [Route("[action]/{userName}", Name = "GetBasketByUserName")]
+    [Route("[action]/{userName}", Name = "GetBasket")]
     [ProducesResponseType(typeof(ShoppingCartResponse), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<ShoppingCartResponse>> GetBasket(string userName)
     {
@@ -48,7 +48,7 @@ public class BasketController : ApiController
     }
 
     [HttpDelete]
-    [Route("[action]/{userName}", Name = "DeleteBasketByUserName")]
+    [Route("[action]/{userName}", Name = "DeleteBasket")]
     [ProducesResponseType((int)HttpStatusCode.OK)]
     public async Task<ActionResult<ShoppingCartResponse>> DeleteBasket(string userName)
     {

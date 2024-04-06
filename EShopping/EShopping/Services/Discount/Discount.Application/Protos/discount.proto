@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-option csharp_namespace = "Discount.Grpc.Protos";
 //this protocol is like an image of our repo implementation in form of gRPC 
+option csharp_namespace = "Discount.Grpc.Protos";
 service DiscountProtoService {
   rpc GetDiscount(GetDiscountRequest) returns (CouponModel);
   rpc CreateDiscount(CreateDiscountRequest) returns (CouponModel);
@@ -9,10 +9,10 @@ service DiscountProtoService {
   rpc DeleteDiscount(DeleteDiscountRequest) returns (DeleteDiscountResponse);
 }
 
+//the numbers are the execution order of each message param
 message GetDiscountRequest {
   string productName = 1;
 }
-//the numbers are the execution order of each param
 message CouponModel {
   int32 id = 1;
   string productName = 2;
