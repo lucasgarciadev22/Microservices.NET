@@ -21,17 +21,14 @@ public class GetDiscountQueryHandler : IRequestHandler<GetDiscountQuery, CouponM
         CancellationToken cancellationToken
     )
     {
-        Coupon coupon = await _discountRepository.GetDiscount(request.ProductName);
-
-        if (coupon == null)
-        {
-            throw new RpcException(
+        Coupon coupon =
+            await _discountRepository.GetDiscount(request.ProductName)
+            ?? throw new RpcException(
                 new Status(
                     StatusCode.NotFound,
                     $"Discount with the product name: {request.ProductName} was not found"
                 )
             );
-        }
         //can use automapper here as well... as seen in create command example
         CouponModel model =
             new()

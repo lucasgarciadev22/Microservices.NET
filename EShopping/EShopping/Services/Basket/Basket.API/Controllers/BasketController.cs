@@ -35,6 +35,14 @@ public class BasketController : ApiController
         [FromBody] CreateShoppingCartCommand createShoppingCartCommand
     )
     {
+        foreach (Core.Entities.ShoppingCartItem item in createShoppingCartCommand.Items)
+        {
+            Discount.Grpc.Protos.CouponModel coupon = await _discountGrpcService.GetDiscount(
+                item.ProductName
+            );
+            item.Price -= coupon.Amount;
+        }
+
         ShoppingCartResponse basket = await _mediator.Send(createShoppingCartCommand);
         return Ok(basket);
     }

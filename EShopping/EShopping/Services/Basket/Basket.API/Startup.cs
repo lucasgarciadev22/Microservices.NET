@@ -1,4 +1,5 @@
-﻿using Basket.Application.GrpcService;
+﻿using Basket.API.Swagger;
+using Basket.Application.GrpcService;
 using Basket.Application.Handlers;
 using Basket.Core.Repositories;
 using Basket.Infrastructure.Repositories;
@@ -9,7 +10,8 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
 namespace Basket.API;
@@ -113,9 +115,10 @@ public class Startup
         services.AddScoped<IBasketRepository, BasketRepository>();
 
         //Swagger Settings
+        services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
         services.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc("v1", new OpenApiInfo() { Title = "Basket.API", Version = "v1" });
+            options.OperationFilter<SwaggerDefaultValues>();
         });
     }
 

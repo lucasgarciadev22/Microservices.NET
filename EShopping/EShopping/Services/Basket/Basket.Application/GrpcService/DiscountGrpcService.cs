@@ -11,7 +11,7 @@ public class DiscountGrpcService
         _serviceClient = serviceClient;
     }
 
-    private async Task<CouponModel> GetDiscount(string productName)
+    public async Task<CouponModel> GetDiscount(string productName)
     {
         GetDiscountRequest discountRequest = new() { ProductName = productName };
         return await _serviceClient.GetDiscountAsync(discountRequest);
