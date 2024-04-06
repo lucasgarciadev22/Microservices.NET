@@ -1,6 +1,7 @@
 namespace Catalog.Core.Specs;
 
-public class Pagination<T> where T: class
+public class Pagination<T>
+    where T : class
 {
     public Pagination(int pageIndex, int pageSize, int count, IReadOnlyList<T> data)
     {
@@ -10,9 +11,7 @@ public class Pagination<T> where T: class
         Data = data;
     }
 
-    public Pagination()
-    {
-    }
+    public Pagination() { }
 
     public int PageIndex { get; set; }
     public int PageSize { get; set; }

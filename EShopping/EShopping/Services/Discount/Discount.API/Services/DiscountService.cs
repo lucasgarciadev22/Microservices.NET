@@ -22,8 +22,8 @@ public class DiscountService : DiscountProtoService.DiscountProtoServiceBase
         ServerCallContext context
     )
     {
-        var query = new GetDiscountQuery(request.ProductName);
-        var result = await _mediator.Send(query);
+        GetDiscountQuery query = new GetDiscountQuery(request.ProductName);
+        CouponModel result = await _mediator.Send(query);
 
         _logger.LogInformation(
             $"Discount was found for the product name: {request.ProductName} and the amount is:{result.Amount}"
@@ -37,13 +37,13 @@ public class DiscountService : DiscountProtoService.DiscountProtoServiceBase
         ServerCallContext context
     )
     {
-        var cmd = new CreateDiscountCommand
+        CreateDiscountCommand cmd = new CreateDiscountCommand
         {
             Amount = request.Coupon.Amount,
             ProductName = request.Coupon.ProductName,
             Description = request.Coupon.Description,
         };
-        var result = await _mediator.Send(cmd);
+        CouponModel result = await _mediator.Send(cmd);
         _logger.LogInformation(
             $"Discount was successfully created for product: {result.ProductName}"
         );
@@ -56,14 +56,14 @@ public class DiscountService : DiscountProtoService.DiscountProtoServiceBase
         ServerCallContext context
     )
     {
-        var cmd = new UpdateDiscountCommand
+        UpdateDiscountCommand cmd = new UpdateDiscountCommand
         {
             Id = request.Coupon.Id,
             Amount = request.Coupon.Amount,
             ProductName = request.Coupon.ProductName,
             Description = request.Coupon.Description,
         };
-        var result = await _mediator.Send(cmd);
+        CouponModel result = await _mediator.Send(cmd);
         _logger.LogInformation(
             $"Discount was successfully created for product: {result.ProductName}"
         );
@@ -76,9 +76,9 @@ public class DiscountService : DiscountProtoService.DiscountProtoServiceBase
         ServerCallContext context
     )
     {
-        var cmd = new DeleteDiscountCommand(request.ProductName);
-        var deleted = await _mediator.Send(cmd);
-        var response = new DeleteDiscountResponse { Success = deleted };
+        DeleteDiscountCommand cmd = new(request.ProductName);
+        bool deleted = await _mediator.Send(cmd);
+        DeleteDiscountResponse response = new() { Success = deleted };
 
         return response;
     }
