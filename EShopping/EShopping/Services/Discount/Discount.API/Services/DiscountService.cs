@@ -22,7 +22,7 @@ public class DiscountService : DiscountProtoService.DiscountProtoServiceBase
         ServerCallContext context
     )
     {
-        GetDiscountQuery query = new GetDiscountQuery(request.ProductName);
+        GetDiscountQuery query = new(request.ProductName);
         CouponModel result = await _mediator.Send(query);
 
         _logger.LogInformation(
@@ -37,12 +37,14 @@ public class DiscountService : DiscountProtoService.DiscountProtoServiceBase
         ServerCallContext context
     )
     {
-        CreateDiscountCommand cmd = new CreateDiscountCommand
-        {
-            Amount = request.Coupon.Amount,
-            ProductName = request.Coupon.ProductName,
-            Description = request.Coupon.Description,
-        };
+        CreateDiscountCommand cmd =
+            new()
+            {
+                Amount = request.Coupon.Amount,
+                ProductName = request.Coupon.ProductName,
+                Description = request.Coupon.Description,
+            };
+
         CouponModel result = await _mediator.Send(cmd);
         _logger.LogInformation(
             $"Discount was successfully created for product: {result.ProductName}"
@@ -56,13 +58,15 @@ public class DiscountService : DiscountProtoService.DiscountProtoServiceBase
         ServerCallContext context
     )
     {
-        UpdateDiscountCommand cmd = new UpdateDiscountCommand
-        {
-            Id = request.Coupon.Id,
-            Amount = request.Coupon.Amount,
-            ProductName = request.Coupon.ProductName,
-            Description = request.Coupon.Description,
-        };
+        UpdateDiscountCommand cmd =
+            new()
+            {
+                Id = request.Coupon.Id,
+                Amount = request.Coupon.Amount,
+                ProductName = request.Coupon.ProductName,
+                Description = request.Coupon.Description,
+            };
+
         CouponModel result = await _mediator.Send(cmd);
         _logger.LogInformation(
             $"Discount was successfully created for product: {result.ProductName}"
