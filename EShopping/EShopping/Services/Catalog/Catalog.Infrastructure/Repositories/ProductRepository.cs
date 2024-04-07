@@ -18,28 +18,34 @@ public class ProductRepository : IProductRepository, IBrandRepository, ITypeRepo
 
     public async Task<Pagination<Product>> GetProducts(CatalogSpecParams catalogSpecParams)
     {
-        var builder = Builders<Product>.Filter;
-        var filter = builder.Empty;
-        if (!string.IsNullOrEmpty(catalogSpecParams.Search))
+        FilterDefinitionBuilder<Product> builder = Builders<Product>.Filter;
+        FilterDefinition<Product> filter = builder.Empty;
+        if (!string.IsNullOrEmpty(catalogSpecParams?.Search))
         {
-            var searchFilter = builder.Regex(
+            FilterDefinition<Product> searchFilter = builder.Regex(
                 x => x.Name,
-                new BsonRegularExpression(catalogSpecParams.Search)
+                new BsonRegularExpression(catalogSpecParams?.Search)
             );
             filter &= searchFilter;
         }
-        if (!string.IsNullOrEmpty(catalogSpecParams.BrandId))
+        if (!string.IsNullOrEmpty(catalogSpecParams?.BrandId))
         {
-            var brandFilter = builder.Eq(x => x.Brands.Id, catalogSpecParams.BrandId);
+            FilterDefinition<Product> brandFilter = builder.Eq(
+                x => x.Brands.Id,
+                catalogSpecParams.BrandId
+            );
             filter &= brandFilter; //AND operator
         }
-        if (!string.IsNullOrEmpty(catalogSpecParams.TypeId))
+        if (!string.IsNullOrEmpty(catalogSpecParams?.TypeId))
         {
-            var typeFilter = builder.Eq(x => x.Types.Id, catalogSpecParams.TypeId);
+            FilterDefinition<Product> typeFilter = builder.Eq(
+                x => x.Types.Id,
+                catalogSpecParams.TypeId
+            );
             filter &= typeFilter;
         }
 
-        if (!string.IsNullOrEmpty(catalogSpecParams.Sort))
+        if (!string.IsNullOrEmpty(catalogSpecParams?.Sort))
         {
             return new Pagination<Product>
             {
@@ -52,13 +58,13 @@ public class ProductRepository : IProductRepository, IBrandRepository, ITypeRepo
 
         return new Pagination<Product>
         {
-            PageSize = catalogSpecParams.PageSize,
-            PageIndex = catalogSpecParams.PageIndex,
+            PageSize = catalogSpecParams is null ? 1 : catalogSpecParams.PageSize,
+            PageIndex = catalogSpecParams is null ? 0 : catalogSpecParams.PageIndex,
             Data = await _context.Products
                 .Find(filter)
                 .Sort(Builders<Product>.Sort.Ascending("Name"))
-                .Skip(catalogSpecParams.PageSize * (catalogSpecParams.PageIndex - 1))
-                .Limit(catalogSpecParams.PageSize)
+                .Skip(catalogSpecParams?.PageSize * (catalogSpecParams?.PageIndex - 1))
+                .Limit(catalogSpecParams?.PageSize)
                 .ToListAsync(),
             Count = await _context.Products.CountDocumentsAsync(p => true)
         };
@@ -69,30 +75,30 @@ public class ProductRepository : IProductRepository, IBrandRepository, ITypeRepo
         FilterDefinition<Product> filter
     )
     {
-        switch (catalogSpecParams.Sort)
+        return catalogSpecParams?.Sort switch
         {
-            case "priceAsc":
-                return await _context.Products
+            "priceAsc"
+                => await _context.Products
                     .Find(filter)
                     .Sort(Builders<Product>.Sort.Ascending("Price"))
-                    .Skip(catalogSpecParams.PageSize * (catalogSpecParams.PageIndex - 1))
-                    .Limit(catalogSpecParams.PageSize)
-                    .ToListAsync();
-            case "priceDesc":
-                return await _context.Products
+                    .Skip(catalogSpecParams?.PageSize * (catalogSpecParams?.PageIndex - 1))
+                    .Limit(catalogSpecParams?.PageSize)
+                    .ToListAsync(),
+            "priceDesc"
+                => await _context.Products
                     .Find(filter)
                     .Sort(Builders<Product>.Sort.Descending("Price"))
-                    .Skip(catalogSpecParams.PageSize * (catalogSpecParams.PageIndex - 1))
-                    .Limit(catalogSpecParams.PageSize)
-                    .ToListAsync();
-            default:
-                return await _context.Products
+                    .Skip(catalogSpecParams?.PageSize * (catalogSpecParams?.PageIndex - 1))
+                    .Limit(catalogSpecParams?.PageSize)
+                    .ToListAsync(),
+            _
+                => await _context.Products
                     .Find(filter)
                     .Sort(Builders<Product>.Sort.Ascending("Name"))
-                    .Skip(catalogSpecParams.PageSize * (catalogSpecParams.PageIndex - 1))
-                    .Limit(catalogSpecParams.PageSize)
-                    .ToListAsync();
-        }
+                    .Skip(catalogSpecParams?.PageSize * (catalogSpecParams?.PageIndex - 1))
+                    .Limit(catalogSpecParams?.PageSize)
+                    .ToListAsync(),
+        };
     }
 
     public async Task<Product> GetProduct(string id)
@@ -120,7 +126,7 @@ public class ProductRepository : IProductRepository, IBrandRepository, ITypeRepo
 
     public async Task<bool> UpdateProduct(Product product)
     {
-        var updateResult = await _context.Products.ReplaceOneAsync(
+        ReplaceOneResult updateResult = await _context.Products.ReplaceOneAsync(
             p => p.Id == product.Id,
             product
         );

@@ -1,6 +1,6 @@
-using System.Text.Json;
 using Catalog.Core.Entities;
 using MongoDB.Driver;
+using System.Text.Json;
 
 namespace Catalog.Infrastructure.Data;
 
@@ -9,15 +9,16 @@ public class CatalogContextSeed
     public static void SeedData(IMongoCollection<Product> productCollection)
     {
         bool checkProducts = productCollection.Find(b => true).Any();
-        string path = "../Catalog.Infrastructure/Data/SeedData/products.json";
+        string basePath = AppDomain.CurrentDomain.BaseDirectory;
+        string path = Path.Combine(basePath, "Data", "SeedData", "products.json");
 
         if (!checkProducts)
         {
-            var productsData = File.ReadAllText(path);
-            var products = JsonSerializer.Deserialize<List<Product>>(productsData);
+            string productsData = File.ReadAllText(path);
+            List<Product>? products = JsonSerializer.Deserialize<List<Product>>(productsData);
             if (products != null)
             {
-                foreach (var item in products)
+                foreach (Product item in products)
                 {
                     productCollection.InsertOneAsync(item);
                 }

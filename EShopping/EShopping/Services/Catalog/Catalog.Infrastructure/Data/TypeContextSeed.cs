@@ -9,14 +9,16 @@ public class TypeContextSeed
     public static void SeedData(IMongoCollection<ProductType> typeCollection)
     {
         bool checkTypes = typeCollection.Find(b => true).Any();
-        string path = Path.Combine("Data", "SeedData", "types.json");
+        string basePath = AppDomain.CurrentDomain.BaseDirectory;
+        string path = Path.Combine(basePath, "Data", "SeedData", "types.json");
+
         if (!checkTypes)
         {
-            var typesData = File.ReadAllText(path);
-            var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
+            string typesData = File.ReadAllText(path);
+            List<ProductType>? types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
             if (types != null)
             {
-                foreach (var item in types)
+                foreach (ProductType item in types)
                 {
                     typeCollection.InsertOneAsync(item);
                 }
