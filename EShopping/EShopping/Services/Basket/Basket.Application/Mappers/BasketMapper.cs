@@ -4,16 +4,18 @@ namespace Basket.Application.Mappers;
 
 public class BasketMapper
 {
-    private static readonly Lazy<IMapper> Lazy = new Lazy<IMapper>(() =>
-    {
-        var config = new MapperConfiguration(cfg =>
+    private static readonly Lazy<IMapper> Lazy =
+        new(() =>
         {
-            cfg.ShouldMapProperty = p => p.GetMethod.IsPublic || p.GetMethod.IsAssembly;
-            cfg.AddProfile<BasketMapperProfile>();
+            MapperConfiguration config =
+                new(cfg =>
+                {
+                    cfg.ShouldMapProperty = p => p.GetMethod.IsPublic || p.GetMethod.IsAssembly;
+                    cfg.AddProfile<BasketMapperProfile>();
+                });
+            IMapper mapper = config.CreateMapper();
+            return mapper;
         });
-        var mapper = config.CreateMapper();
-        return mapper;
-    });
 
     public static IMapper Mapper => Lazy.Value;
 }
