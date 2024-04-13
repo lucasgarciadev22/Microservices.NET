@@ -5,14 +5,10 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Basket.API.Swagger;
 
-public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
+public class ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider)
+    : IConfigureOptions<SwaggerGenOptions>
 {
-    private readonly IApiVersionDescriptionProvider _provider;
-
-    public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider)
-    {
-        _provider = provider;
-    }
+    private readonly IApiVersionDescriptionProvider _provider = provider;
 
     public void Configure(SwaggerGenOptions options)
     {
@@ -22,7 +18,7 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
         }
     }
 
-    private OpenApiInfo ProvideApiInfo(ApiVersionDescription descr)
+    private static OpenApiInfo ProvideApiInfo(ApiVersionDescription descr)
     {
         OpenApiInfo info =
             new()

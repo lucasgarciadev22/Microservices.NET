@@ -17,17 +17,16 @@ public class DiscountRepository : IDiscountRepository
 
     public async Task<bool> CreateDiscount(Coupon coupon)
     {
-        await using var connection = new NpgsqlConnection(
-            _configuration.GetValue<string>("DatabaseSettings:ConnectionString")
-        ); //get the connection string from JSON
+        await using NpgsqlConnection connection =
+            new(_configuration.GetValue<string>("DatabaseSettings:ConnectionString")); //get the connection string from JSON
 
         int affected = await connection.ExecuteAsync(
-            "INSERT INTO Coupon (ProductName,Description, Amount) VALUES (@ProductName,@Description,@Amount",
+            "INSERT INTO Coupon (ProductName, Description, Amount) VALUES (@ProductName,@Description,@Amount",
             new
             {
-                ProductName = coupon.ProductName,
-                Description = coupon.Description,
-                Amount = coupon.Amount
+                coupon.ProductName,
+                coupon.Description,
+                coupon.Amount
             }
         ); //creates the register and returns the affected row from db
 
@@ -39,9 +38,8 @@ public class DiscountRepository : IDiscountRepository
 
     public async Task<bool> DeleteDiscount(string productName)
     {
-        await using var connection = new NpgsqlConnection(
-            _configuration.GetValue<string>("DatabaseSettings:ConnectionString")
-        );
+        await using NpgsqlConnection connection =
+            new(_configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
 
         int affected = await connection.ExecuteAsync(
             "DELETE FROM Coupon WHERE ProductName = @ProductName",
@@ -56,40 +54,37 @@ public class DiscountRepository : IDiscountRepository
 
     public async Task<Coupon> GetDiscount(string productName)
     {
-        await using var connection = new NpgsqlConnection(
-            _configuration.GetValue<string>("DatabaseSettings:ConnectionString")
-        );
+        await using NpgsqlConnection connection =
+            new(_configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
 
-        Coupon coupon = await connection.QueryFirstOrDefaultAsync<Coupon>(
-            "SELECT * FROM Coupon WHERE ProductName = @ProductName",
-            new { ProductName = productName }
-        ); //send query params based on args
-
-        if (coupon is null)
-            return new Coupon
+        Coupon coupon =
+            await connection.QueryFirstOrDefaultAsync<Coupon>(
+                "SELECT * FROM Coupon WHERE ProductName = @ProductName",
+                new { ProductName = productName }
+            )
+            ?? new Coupon
             {
                 ProductName = "No Discount",
                 Amount = 0,
                 Description = "No Discount Available"
-            };
+            }; //send query params based on args
 
         return coupon;
     }
 
     public async Task<bool> UpdateDiscount(Coupon coupon)
     {
-        await using var connection = new NpgsqlConnection(
-            _configuration.GetValue<string>("DatabaseSettings:ConnectionString")
-        );
+        await using NpgsqlConnection connection =
+            new(_configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
 
         int affected = await connection.ExecuteAsync(
-            "UPDATE Coupon SET ProductName = @ProductName,Description = @Description,Amount = @Amount WHERE Id = @Id",
+            "UPDATE Coupon SET ProductName = @ProductName, Description = @Description, Amount = @Amount WHERE Id = @Id",
             new
             {
-                ProductName = coupon.ProductName,
-                Description = coupon.Description,
-                Amount = coupon.Amount,
-                Id = coupon.Id
+                coupon.ProductName,
+                coupon.Description,
+                coupon.Amount,
+                coupon.Id
             }
         ); //updates the register and returns the affected row from db
 
