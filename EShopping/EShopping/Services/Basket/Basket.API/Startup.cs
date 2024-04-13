@@ -1,4 +1,6 @@
-﻿using Basket.API.Swagger;
+﻿using Asp.Versioning;
+using Asp.Versioning.ApiExplorer;
+using Basket.API.Swagger;
 using Basket.Application.GrpcService;
 using Basket.Application.Handlers;
 using Basket.Core.Repositories;
@@ -7,8 +9,6 @@ using Discount.Grpc.Protos;
 using HealthChecks.UI.Client;
 using MassTransit;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -30,29 +30,30 @@ public class Startup
         services.AddControllers();
 
         //Versioning Settings
-        services.AddApiVersioning(options =>
-        {
-            options.AssumeDefaultVersionWhenUnspecified = true;
-            options.DefaultApiVersion = new ApiVersion(1, 0);
-            options.ReportApiVersions = true;
-        });
-        services.AddVersionedApiExplorer(options =>
-        {
-            options.GroupNameFormat = "'v'VVV";
-            options.SubstituteApiVersionInUrl = true;
-            services.AddApiVersioning();
-            services.AddCors(options =>
+        services
+            .AddApiVersioning(options =>
             {
-                options.AddPolicy(
-                    "CorsPolicy",
-                    policy =>
-                    {
-                        //TODO read the same from settings for prod deployment
-                        policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-                    }
-                );
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.ReportApiVersions = true;
+            })
+            .AddApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV";
+                options.SubstituteApiVersionInUrl = true;
+                services.AddApiVersioning();
+                services.AddCors(options =>
+                {
+                    options.AddPolicy(
+                        "CorsPolicy",
+                        policy =>
+                        {
+                            //TODO read the same from settings for prod deployment
+                            policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                        }
+                    );
+                });
             });
-        });
 
         services.AddAuthorization();
 
@@ -109,8 +110,6 @@ public class Startup
                 }
             );
         });
-        services.AddMassTransitHostedService();
-
         services.AddAutoMapper(typeof(Startup));
         services.AddScoped<IBasketRepository, BasketRepository>();
 
