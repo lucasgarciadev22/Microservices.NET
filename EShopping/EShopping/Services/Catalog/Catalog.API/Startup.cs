@@ -10,14 +10,9 @@ using System.Reflection;
 
 namespace Catalog.API;
 
-public class Startup
+public class Startup(IConfiguration configuration)
 {
-    public IConfiguration Configuration;
-
-    public Startup(IConfiguration configuration)
-    {
-        Configuration = configuration;
-    }
+    public IConfiguration Configuration = configuration;
 
     public void ConfigureServices(IServiceCollection services)
     {

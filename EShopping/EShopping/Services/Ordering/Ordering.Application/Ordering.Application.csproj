@@ -12,8 +12,6 @@
     <Folder Include="Behaviours\" />
     <Folder Include="Mappers\" />
     <Folder Include="Validations\" />
-    <Folder Include="Responses\" />
-    <Folder Include="Queries\" />
   </ItemGroup>
 
   <ItemGroup>
