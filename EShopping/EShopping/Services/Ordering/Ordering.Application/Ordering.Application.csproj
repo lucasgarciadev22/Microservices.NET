@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Handlers\" />
     <Folder Include="Behaviours\" />
     <Folder Include="Mappers\" />
     <Folder Include="Validations\" />
@@ -19,6 +18,10 @@
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0" />
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ordering.Core\Ordering.Core.csproj" />
   </ItemGroup>
 
 </Project>

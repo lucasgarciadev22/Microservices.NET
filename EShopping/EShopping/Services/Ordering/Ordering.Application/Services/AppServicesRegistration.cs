@@ -1,6 +1,7 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Ordering.Application.Handlers;
 using System.Reflection;
 
 namespace Ordering.Application.Services;
@@ -13,7 +14,7 @@ public static class AppServicesRegistration
         services.AddMediatR(
             cfg =>
                 cfg.RegisterServicesFromAssembly(
-                    typeof().GetTypeInfo().Assembly
+                    typeof(GetOrderListQueryHandler).GetTypeInfo().Assembly
                 )
         );
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
