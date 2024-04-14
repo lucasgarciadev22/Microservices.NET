@@ -19,11 +19,11 @@ public class CheckoutOrderCommandHandler(
 
     public async Task<int> Handle(CheckoutOrderCommand request, CancellationToken cancellationToken)
     {
-        Order orderEntity = _mapper.Map<Order>(request);
-        Order generatedOrder = await _orderRepository.AddAsync(orderEntity);
+        Order orderToAdd = _mapper.Map<Order>(request);
+        Order addedOrder = await _orderRepository.AddAsync(orderToAdd);
 
-        _logger.LogInformation("Order {GeneratedOrder} successfully created.", generatedOrder);
+        _logger.LogInformation("Order {GeneratedOrder} successfully created.", addedOrder);
 
-        return generatedOrder.Id;
+        return addedOrder.Id;
     }
 }
