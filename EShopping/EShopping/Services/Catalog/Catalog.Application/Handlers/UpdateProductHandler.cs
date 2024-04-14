@@ -5,21 +5,17 @@ using MediatR;
 
 namespace Catalog.Application.Handlers;
 
-public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, bool>
+public class UpdateProductHandler(IProductRepository productRepository)
+    : IRequestHandler<UpdateProductCommand, bool>
 {
-    private readonly IProductRepository _productRepository;
-
-    public UpdateProductHandler(IProductRepository productRepository)
-    {
-        _productRepository = productRepository;
-    }
+    private readonly IProductRepository _productRepository = productRepository;
 
     public async Task<bool> Handle(
         UpdateProductCommand request,
         CancellationToken cancellationToken
     )
     {
-        var productEntity = await _productRepository.UpdateProduct(
+        bool productEntity = await _productRepository.UpdateProduct(
             new Product
             {
                 Id = request.Id,

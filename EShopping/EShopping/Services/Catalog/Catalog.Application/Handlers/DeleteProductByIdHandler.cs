@@ -4,14 +4,10 @@ using MediatR;
 
 namespace Catalog.Application.Handlers;
 
-public class DeleteProductByIdHandler : IRequestHandler<DeleteProductByIdCommand, bool>
+public class DeleteProductByIdHandler(IProductRepository productRepository)
+    : IRequestHandler<DeleteProductByIdCommand, bool>
 {
-    private readonly IProductRepository _productRepository;
-
-    public DeleteProductByIdHandler(IProductRepository productRepository)
-    {
-        _productRepository = productRepository;
-    }
+    private readonly IProductRepository _productRepository = productRepository;
 
     public async Task<bool> Handle(
         DeleteProductByIdCommand request,
