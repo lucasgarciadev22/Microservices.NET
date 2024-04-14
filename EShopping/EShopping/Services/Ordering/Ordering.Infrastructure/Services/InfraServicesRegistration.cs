@@ -7,7 +7,7 @@ using Ordering.Infrastructure.Repositories;
 
 namespace Ordering.Infrastructure.Services;
 
-public static class InfraServices
+public static class InfraServicesRegistration
 {
     public static IServiceCollection AddInfraServices(
         this IServiceCollection serviceCollection,
