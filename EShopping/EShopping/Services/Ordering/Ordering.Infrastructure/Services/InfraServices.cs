@@ -5,7 +5,7 @@ using Ordering.Core.Repositories;
 using Ordering.Infrastructure.Data;
 using Ordering.Infrastructure.Repositories;
 
-namespace Ordering.Infrastructure.Extensions;
+namespace Ordering.Infrastructure.Services;
 
 public static class InfraServices
 {
