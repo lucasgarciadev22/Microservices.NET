@@ -26,7 +26,9 @@ public class DiscountService : DiscountProtoService.DiscountProtoServiceBase
         CouponModel result = await _mediator.Send(query);
 
         _logger.LogInformation(
-            $"Discount was found for the product name: {request.ProductName} and the amount is:{result.Amount}"
+            "Discount was found for the product name: {ProductName} and the amount is: {Amount}",
+            request.ProductName,
+            result.Amount
         );
 
         return result;
@@ -46,8 +48,10 @@ public class DiscountService : DiscountProtoService.DiscountProtoServiceBase
             };
 
         CouponModel result = await _mediator.Send(cmd);
+
         _logger.LogInformation(
-            $"Discount was successfully created for product: {result.ProductName}"
+            "Discount was successfully created for product: {ProductName}",
+            result.ProductName
         );
 
         return result;
@@ -68,8 +72,10 @@ public class DiscountService : DiscountProtoService.DiscountProtoServiceBase
             };
 
         CouponModel result = await _mediator.Send(cmd);
+
         _logger.LogInformation(
-            $"Discount was successfully created for product: {result.ProductName}"
+            "Discount was successfully updated for product: {ProductName}",
+            result.ProductName
         );
 
         return result;
