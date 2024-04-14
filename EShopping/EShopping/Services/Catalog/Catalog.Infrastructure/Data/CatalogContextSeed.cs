@@ -12,16 +12,16 @@ public class CatalogContextSeed
         string basePath = AppDomain.CurrentDomain.BaseDirectory;
         string path = Path.Combine(basePath, "Data", "SeedData", "products.json");
 
-        if (!checkProducts)
+        if (checkProducts)
+            return;
+
+        string productsData = File.ReadAllText(path);
+        List<Product>? products = JsonSerializer.Deserialize<List<Product>>(productsData);
+        if (products != null)
         {
-            string productsData = File.ReadAllText(path);
-            List<Product>? products = JsonSerializer.Deserialize<List<Product>>(productsData);
-            if (products != null)
+            foreach (Product item in products)
             {
-                foreach (Product item in products)
-                {
-                    productCollection.InsertOneAsync(item);
-                }
+                productCollection.InsertOneAsync(item);
             }
         }
     }

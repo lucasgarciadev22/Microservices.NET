@@ -7,14 +7,10 @@ using MediatR;
 
 namespace Discount.Application.Handlers;
 
-public class GetDiscountQueryHandler : IRequestHandler<GetDiscountQuery, CouponModel>
+public class GetDiscountQueryHandler(IDiscountRepository discountRepository)
+    : IRequestHandler<GetDiscountQuery, CouponModel>
 {
-    private readonly IDiscountRepository _discountRepository;
-
-    public GetDiscountQueryHandler(IDiscountRepository discountRepository)
-    {
-        _discountRepository = discountRepository;
-    }
+    private readonly IDiscountRepository _discountRepository = discountRepository;
 
     public async Task<CouponModel> Handle(
         GetDiscountQuery request,

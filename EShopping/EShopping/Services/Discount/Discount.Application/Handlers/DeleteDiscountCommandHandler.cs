@@ -4,14 +4,10 @@ using MediatR;
 
 namespace Discount.Application.Handlers;
 
-public class DeleteDiscountCommandHandler : IRequestHandler<DeleteDiscountCommand, bool>
+public class DeleteDiscountCommandHandler(IDiscountRepository discountRepository)
+    : IRequestHandler<DeleteDiscountCommand, bool>
 {
-    private readonly IDiscountRepository _discountRepository;
-
-    public DeleteDiscountCommandHandler(IDiscountRepository discountRepository)
-    {
-        _discountRepository = discountRepository;
-    }
+    private readonly IDiscountRepository _discountRepository = discountRepository;
 
     public async Task<bool> Handle(
         DeleteDiscountCommand request,

@@ -12,16 +12,16 @@ public static class BrandContextSeed
         string basePath = AppDomain.CurrentDomain.BaseDirectory;
         string path = Path.Combine(basePath, "Data", "SeedData", "brands.json");
 
-        if (!checkBrands)
+        if (checkBrands)
+            return;
+
+        string brandsData = File.ReadAllText(path);
+        List<ProductBrand>? brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
+        if (brands != null)
         {
-            string brandsData = File.ReadAllText(path);
-            List<ProductBrand>? brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
-            if (brands != null)
+            foreach (ProductBrand item in brands)
             {
-                foreach (ProductBrand item in brands)
-                {
-                    brandCollection.InsertOneAsync(item);
-                }
+                brandCollection.InsertOneAsync(item);
             }
         }
     }

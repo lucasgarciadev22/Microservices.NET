@@ -26,7 +26,11 @@ public class ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider)
                 Title = "Basket API Microservice",
                 Version = descr.ApiVersion.ToString(),
                 Description = "Fetches details about Basket",
-                Contact = new OpenApiContact() { Name = "Rahul Sahay", Email = "rahul@xyz.com" },
+                Contact = new OpenApiContact()
+                {
+                    Name = "Lucas Garcia",
+                    Email = "lucas-garcia@api.com"
+                },
                 License = new OpenApiLicense()
                 {
                     Name = "MIT",
@@ -36,7 +40,7 @@ public class ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider)
 
         if (descr.IsDeprecated)
         {
-            info.Description += " API Version has been deprecated!!!";
+            info.Description += " !API Version has been deprecated!";
         }
 
         return info;
