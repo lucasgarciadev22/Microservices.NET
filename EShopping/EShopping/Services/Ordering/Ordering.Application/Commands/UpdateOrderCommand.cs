@@ -2,7 +2,7 @@ using MediatR;
 
 namespace Ordering.Application.Commands;
 
-public class UpdateOrderCommand : IRequest
+public class UpdateOrderCommand : IRequest<Unit>
 {
     public int Id { get; set; }
     public string? UserName { get; set; }
