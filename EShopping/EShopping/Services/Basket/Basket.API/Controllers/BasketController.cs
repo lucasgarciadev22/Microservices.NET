@@ -8,16 +8,11 @@ using System.Net;
 
 namespace Basket.API.Controllers;
 
-public class BasketController : ApiController
+public class BasketController(IMediator mediator, DiscountGrpcService discountGrpcService)
+    : ApiController
 {
-    private readonly IMediator _mediator;
-    private readonly DiscountGrpcService _discountGrpcService;
-
-    public BasketController(IMediator mediator, DiscountGrpcService discountGrpcService)
-    {
-        _mediator = mediator;
-        _discountGrpcService = discountGrpcService;
-    }
+    private readonly IMediator _mediator = mediator;
+    private readonly DiscountGrpcService _discountGrpcService = discountGrpcService;
 
     [HttpGet]
     [Route("[action]/{userName}", Name = "GetBasket")]

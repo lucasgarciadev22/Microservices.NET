@@ -6,14 +6,9 @@ using Npgsql;
 
 namespace Discount.Infrastructure.Repositories;
 
-public class DiscountRepository : IDiscountRepository
+public class DiscountRepository(IConfiguration configuration) : IDiscountRepository
 {
-    private readonly IConfiguration _configuration;
-
-    public DiscountRepository(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
+    private readonly IConfiguration _configuration = configuration;
 
     public async Task<bool> CreateDiscount(Coupon coupon)
     {

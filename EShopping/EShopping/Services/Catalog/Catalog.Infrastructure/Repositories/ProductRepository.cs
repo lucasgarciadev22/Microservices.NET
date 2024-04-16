@@ -7,14 +7,12 @@ using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Repositories;
 
-public class ProductRepository : IProductRepository, IBrandRepository, ITypeRepository
+public class ProductRepository(ICatalogContext context)
+    : IProductRepository,
+        IBrandRepository,
+        ITypeRepository
 {
-    private readonly ICatalogContext _context;
-
-    public ProductRepository(ICatalogContext context)
-    {
-        _context = context;
-    }
+    private readonly ICatalogContext _context = context;
 
     public async Task<Pagination<Product>> GetProducts(CatalogSpecParams catalogSpecParams)
     {

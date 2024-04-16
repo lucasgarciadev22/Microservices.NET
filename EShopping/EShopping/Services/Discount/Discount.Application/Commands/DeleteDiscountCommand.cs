@@ -2,12 +2,7 @@
 
 namespace Discount.Application.Commands;
 
-public class DeleteDiscountCommand : IRequest<bool>
+public class DeleteDiscountCommand(string productName) : IRequest<bool>
 {
-    public string ProductName { get; }
-
-    public DeleteDiscountCommand(string productName)
-    {
-        ProductName = productName;
-    }
+    public string ProductName { get; } = productName;
 }

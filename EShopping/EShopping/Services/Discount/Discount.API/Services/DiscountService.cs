@@ -6,16 +6,11 @@ using MediatR;
 
 namespace Discount.API.Services;
 
-public class DiscountService : DiscountProtoService.DiscountProtoServiceBase
+public class DiscountService(IMediator mediator, ILogger<DiscountService> logger)
+    : DiscountProtoService.DiscountProtoServiceBase
 {
-    private readonly IMediator _mediator;
-    private readonly ILogger<DiscountService> _logger;
-
-    public DiscountService(IMediator mediator, ILogger<DiscountService> logger)
-    {
-        _mediator = mediator;
-        _logger = logger;
-    }
+    private readonly IMediator _mediator = mediator;
+    private readonly ILogger<DiscountService> _logger = logger;
 
     public override async Task<CouponModel> GetDiscount(
         GetDiscountRequest request,
