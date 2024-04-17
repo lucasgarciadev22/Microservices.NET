@@ -20,6 +20,7 @@ public static class InfraServicesRegistration
         );
         serviceCollection.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
         serviceCollection.AddScoped<IOrderRepository, OrderRepository>();
+
         return serviceCollection;
     }
 }
