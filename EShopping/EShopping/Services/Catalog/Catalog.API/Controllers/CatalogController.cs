@@ -7,17 +7,12 @@ using System.Net;
 
 namespace Catalog.API.Controllers;
 
-public class CatalogController : ApiController
+public class CatalogController(IMediator mediator) : ApiController
 {
-    private readonly IMediator _mediator;
-
-    public CatalogController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
+    private readonly IMediator _mediator = mediator;
 
     [HttpGet]
-    [Route("[action]/{id}", Name = "GetProductById")]
+    [Route("[action]/{productId}", Name = "GetProductById")]
     [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<ProductResponse>> GetProductById(string productId)
     {
