@@ -1,6 +1,7 @@
-using Ordering.API;
 using Ordering.API.Extensions;
 using Ordering.Infrastructure.Data;
+
+namespace Ordering.API;
 
 public class Program
 {

@@ -10,6 +10,9 @@ services:
   discountdb:
     image: postgres
 
+  orderingdb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+
   portainer:
     image: portainer/portainer-ce
 
@@ -20,19 +23,25 @@ services:
     image: ${DOCKER_REGISTRY-}catalogapi
     build:
       context: .
-      dockerfile: Services\Catalog\Catalog.API\Dockerfile
+      dockerfile: Services/Catalog/Catalog.API/Dockerfile
 
   basket.api:
     image: ${DOCKER_REGISTRY-}basketapi
     build:
       context: .
-      dockerfile: Services\Basket\Basket.API\Dockerfile
+      dockerfile: Services/Basket/Basket.API/Dockerfile
 
   discount.api:
     image: ${DOCKER_REGISTRY-}discountapi
     build:
       context: .
       dockerfile: Services/Discount/Discount.API/Dockerfile
+
+  ordering.api:
+    image: ${DOCKER_REGISTRY-}orderingapi
+    build:
+      context: .
+      dockerfile: Services/Ordering/Ordering.API/Dockerfile
       
 volumes:
   mongo_data:

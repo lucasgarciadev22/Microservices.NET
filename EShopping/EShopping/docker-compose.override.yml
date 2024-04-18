@@ -1,6 +1,7 @@
 version: '3.4'
 
 services:
+#mongodb based database for catalog api
   catalogdb:
     container_name: catalogdb
     restart: always
@@ -9,12 +10,14 @@ services:
     volumes:
       - mongo_data:/data/db
 
+#rediscache based 'database' for basket api
   basketdb:
     container_name: basketdb
     restart: always
     ports:
       - "6379:6379"
 
+#postgresql based database for discount api
   discountdb:
     container_name: discountdb
     environment:
@@ -27,6 +30,17 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
+#sqlserver based database for ordering api
+  orderingdb:
+    container_name: orderingdb
+    environment:
+        SA_PASSWORD: "lucas1234567"
+        ACCEPT_EULA: "Y"
+    restart: always
+    ports:
+      - "1433:1433"
+
+#pgadmin for monitoring the postgresql databases
   pgadmin:
     container_name: pgadmin
     environment:
@@ -38,6 +52,7 @@ services:
     volumes:
       - pgadmin_data:/root/.pgadmin
 
+#portainer for monitoring running containers
   portainer:
     container_name: portainer
     restart: always
@@ -48,6 +63,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
 
+#catalog api data context configs, providing appsettings.json values to container context
   catalog.api:
     container_name: catalog.api
     environment:
@@ -62,6 +78,7 @@ services:
     ports:
       - "9000:80"
 
+#basket api data context configs, providing appsettings.json values to container context including cache and grpc client settings
   basket.api:
     container_name: basket.api
     environment:
@@ -73,6 +90,7 @@ services:
     ports:
       - "9001:80"
 
+#discount api data context configs, providing appsettings.json values to container context including postgresql settings
   discount.api:
     container_name: discount.api
     environment:
@@ -83,3 +101,13 @@ services:
     ports:
       - "9002:80"
 
+#ordering api data context configs, providing appsettings.json values to container context including sqlserver settings
+  ordering.api:
+    container_name: ordering.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings__OrderingConnectionString=Server=localhost;Database=OrderingDb;User Id=sa;Password=lucas1234567;"
+    depends_on:
+     - orderingdb
+    ports:
+     - "9003:80"
