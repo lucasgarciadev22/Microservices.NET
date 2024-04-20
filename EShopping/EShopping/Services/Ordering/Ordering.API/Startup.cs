@@ -13,10 +13,10 @@ public class Startup(IConfiguration configuration)
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddApplicationServices();
-        services.AddInfraServices(Configuration);
         services.AddControllers();
         services.AddApiVersioning();
+        services.AddApplicationServices();
+        services.AddInfraServices(Configuration);
         services.AddAutoMapper(typeof(Startup));
 
         services.AddSwaggerGen(c =>
