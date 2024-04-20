@@ -68,6 +68,7 @@ services:
     container_name: catalog.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      # - ASPNETCORE_URLS=http://*:9000
       - "DatabaseSettings__ConnectionString=mongodb://catalogdb:27017"
       - "DatabaseSettings__DatabaseName=CatalogDb"
       - "DatabaseSettings__CollectionName=Products"
@@ -83,6 +84,7 @@ services:
     container_name: basket.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      # - ASPNETCORE_URLS=http://*:9001
       - "CacheSettings__ConnectionString=basketdb:6379"
       - "GrpcSettings__DiscountUrl=http://discount.api"
     depends_on:
@@ -95,6 +97,7 @@ services:
     container_name: discount.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      # - ASPNETCORE_URLS=http://*:9002
       - "DatabaseSettings__ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=Password@1;"       
     depends_on:
       - discountdb
@@ -106,6 +109,7 @@ services:
     container_name: ordering.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      # - ASPNETCORE_URLS=http://*:9003
       - "ConnectionStrings__OrderingConnectionString=Server=orderingdb;Database=OrderingDb;User Id=sa;Password=Lucas*12345;TrustServerCertificate=True"
     depends_on:
      - orderingdb
