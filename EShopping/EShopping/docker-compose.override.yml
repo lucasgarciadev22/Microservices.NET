@@ -34,7 +34,7 @@ services:
   orderingdb:
     container_name: orderingdb
     environment:
-        SA_PASSWORD: "lucas1234567"
+        SA_PASSWORD: "Lucas*12345"
         ACCEPT_EULA: "Y"
     restart: always
     ports:
@@ -106,7 +106,7 @@ services:
     container_name: ordering.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings__OrderingConnectionString=Server=localhost;Database=OrderingDb;User Id=sa;Password=lucas1234567;"
+      - "ConnectionStrings__OrderingConnectionString=Server=localhost;Database=OrderingDb;User Id=sa;Password=Lucas*12345;"
     depends_on:
      - orderingdb
     ports:

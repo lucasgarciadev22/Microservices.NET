@@ -7,11 +7,13 @@ using Ordering.Core.Repositories;
 
 namespace Ordering.Application.Handlers;
 
-public class DeleteOrderCommandHandler(IOrderRepository orderRepository, ILogger logger)
-    : IRequestHandler<DeleteOrderCommand, Unit>
+public class DeleteOrderCommandHandler(
+    IOrderRepository orderRepository,
+    ILogger<DeleteOrderCommandHandler> logger
+) : IRequestHandler<DeleteOrderCommand, Unit>
 {
     private readonly IOrderRepository _orderRepository = orderRepository;
-    private readonly ILogger _logger = logger;
+    private readonly ILogger<DeleteOrderCommandHandler> _logger = logger;
 
     public async Task<Unit> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
     {
