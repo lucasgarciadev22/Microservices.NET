@@ -13,11 +13,14 @@ services:
   orderingdb:
     image: mcr.microsoft.com/mssql/server:2022-latest
 
-  portainer:
-    image: portainer/portainer-ce
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
 
   pgadmin:
     image: dpage/pgadmin4
+
+  portainer:
+    image: portainer/portainer-ce
 
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
