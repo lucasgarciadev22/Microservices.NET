@@ -121,6 +121,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - "ConnectionStrings__OrderingConnectionString=Server=orderingdb;Database=OrderingDb;User Id=sa;Password=Lucas*12345;TrustServerCertificate=True"
+      - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on:
      - orderingdb
     ports:
