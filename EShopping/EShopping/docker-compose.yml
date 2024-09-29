@@ -22,6 +22,12 @@ services:
   portainer:
     image: portainer/portainer-ce
 
+  ocelotapigw:
+    image: ${DOCKER_REGISTRY-}ocelotapigw
+    build:
+      context: .
+      dockerfile: ApiGateways/Ocelot.ApiGateway/Dockerfile
+
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
     build:
