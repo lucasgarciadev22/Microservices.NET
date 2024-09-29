@@ -14,7 +14,7 @@ public class Program
                 {
                     config.AddJsonFile(
                         $"ocelot.{env.HostingEnvironment.EnvironmentName}.json",
-                        true,
+                        false,
                         true
                     );
                 }

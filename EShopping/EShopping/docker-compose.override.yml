@@ -131,7 +131,8 @@ services:
   ocelotapigw:
     container_name: ocelotapigw
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development      
+      - ASPNETCORE_ENVIRONMENT=Development    
+      - ASPNETCORE_URLS=http://0.0.0.0:80
     depends_on:
 #      - identityserver
       - catalog.api
