@@ -1,6 +1,4 @@
-using Ocelot.ApiGateway;
-
-namespace Ocelot.Gateways;
+namespace Ocelot.ApiGateway;
 
 public class Program
 {
