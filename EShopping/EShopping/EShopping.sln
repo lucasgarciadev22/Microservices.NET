@@ -51,7 +51,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus.Messages", "Infrastructure\EventBus.Messages\EventBus.Messages.csproj", "{D0E7C798-6BD3-4A74-A8B0-EA7D31DFEB47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ocelot.Gateways", "ApiGateways\Ocelot.Gateways\Ocelot.Gateways.csproj", "{AAEEC4B7-EDBA-42F0-A39F-782C360F6257}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ocelot.ApiGateway", "ApiGateways\Ocelot.Gateways\Ocelot.ApiGateway.csproj", "{AAEEC4B7-EDBA-42F0-A39F-782C360F6257}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{3923C663-1563-4707-BC87-01DAC1C74467}"
 EndProject

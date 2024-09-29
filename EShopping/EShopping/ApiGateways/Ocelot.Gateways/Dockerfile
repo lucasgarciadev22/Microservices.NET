@@ -12,19 +12,19 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["ApiGateways/Ocelot.Gateways/Ocelot.Gateways.csproj", "ApiGateways/Ocelot.Gateways/"]
-RUN dotnet restore "./ApiGateways/Ocelot.Gateways/Ocelot.Gateways.csproj"
+COPY ["ApiGateways/Ocelot.ApiGetaway/Ocelot.ApiGetaway.csproj", "ApiGateways/Ocelot.ApiGetaway/"]
+RUN dotnet restore "./ApiGateways/Ocelot.ApiGetaway/Ocelot.ApiGetaway.csproj"
 COPY . .
-WORKDIR "/src/ApiGateways/Ocelot.Gateways"
-RUN dotnet build "./Ocelot.Gateways.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/ApiGateways/Ocelot.ApiGetaway"
+RUN dotnet build "./Ocelot.ApiGetaway.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Esta fase é usada para publicar o projeto de serviço a ser copiado para a fase final
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Ocelot.Gateways.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Ocelot.ApiGetaway.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Esta fase é usada na produção ou quando executada no VS no modo normal (padrão quando não está usando a configuração de Depuração)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Ocelot.Gateways.dll"]
+ENTRYPOINT ["dotnet", "Ocelot.ApiGetaway.dll"]
