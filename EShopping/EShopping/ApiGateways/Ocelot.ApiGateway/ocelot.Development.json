@@ -6,7 +6,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "host.docker.internal",
+          //"Host": "host.docker.internal", // only works for docker windows or mac
+          "Host": "catalog.api",//use docker service id for docker linux
           "Port": "9000"
         }
       ],
@@ -19,7 +20,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "host.docker.internal",
+          //"Host": "host.docker.internal", // only works for docker windows or mac
+          "Host": "catalog.api", //use docker service id for docker linux
           "Port": "9000"
         }
       ],
@@ -31,7 +33,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "host.docker.internal",
+          //"Host": "host.docker.internal", // only works for docker windows or mac
+          "Host": "catalog.api", //use docker service id for docker linux
           "Port": "9000"
         }
       ],
@@ -43,7 +46,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "host.docker.internal",
+          //"Host": "host.docker.internal", // only works for docker windows or mac
+          "Host": "catalog.api", //use docker service id for docker linux
           "Port": "9000"
         }
       ],
@@ -55,7 +59,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "host.docker.internal",
+          //"Host": "host.docker.internal", // only works for docker windows or mac
+          "Host": "catalog.api", //use docker service id for docker linux
           "Port": "9000"
         }
       ],
@@ -67,7 +72,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "host.docker.internal",
+          //"Host": "host.docker.internal", // only works for docker windows or mac
+          "Host": "catalog.api", //use docker service id for docker linux
           "Port": "9000"
         }
       ],
@@ -80,7 +86,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "host.docker.internal",
+          //"Host": "host.docker.internal", // only works for docker windows or mac
+          "Host": "basket.api", //use docker service id for docker linux
           "Port": "9001"
         }
       ],
@@ -92,7 +99,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "host.docker.internal",
+          //"Host": "host.docker.internal", // only works for docker windows or mac
+          "Host": "basket.api", //use docker service id for docker linux
           "Port": "9001"
         }
       ],
@@ -104,7 +112,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "host.docker.internal",
+          //"Host": "host.docker.internal", // only works for docker windows or mac
+          "Host": "basket.api", //use docker service id for docker linux
           "Port": "9001"
         }
       ],
@@ -119,7 +128,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "host.docker.internal",
+          //"Host": "host.docker.internal", // only works for docker windows or mac
+          "Host": "basket.api", //use docker service id for docker linux
           "Port": "9001"
         }
       ],
@@ -138,7 +148,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "host.docker.internal",
+          //"Host": "host.docker.internal", // only works for docker windows or mac
+          "Host": "basket.api", //use docker service id for docker linux
           "Port": "9001"
         }
       ],
@@ -158,7 +169,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "host.docker.internal",
+          //"Host": "host.docker.internal", // only works for docker windows or mac
+          "Host": "discount.api", //use docker service id for docker linux
           "Port": "9002"
         }
       ],
@@ -170,7 +182,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "host.docker.internal",
+          //"Host": "host.docker.internal", // only works for docker windows or mac
+          "Host": "discount.api", //use docker service id for docker linux
           "Port": "9002"
         }
       ],
@@ -183,7 +196,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "host.docker.internal",
+          //"Host": "host.docker.internal", // only works for docker windows or mac
+          "Host": "order.api", //use docker service id for docker linux
           "Port": "9003"
         }
       ],

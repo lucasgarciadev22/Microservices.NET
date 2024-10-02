@@ -6,7 +6,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "localhost", //local executon no docker!
           "Port": "9000"
         }
       ],
@@ -19,7 +19,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "localhost", //local executon no docker!
           "Port": "9000"
         }
       ],
@@ -31,7 +31,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "localhost", //local executon no docker!
           "Port": "9000"
         }
       ],
@@ -43,7 +43,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "localhost", //local executon no docker!
           "Port": "9000"
         }
       ],
@@ -55,7 +55,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "localhost", //local executon no docker!
           "Port": "9000"
         }
       ],
@@ -67,7 +67,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "localhost", //local executon no docker!
           "Port": "9000"
         }
       ],
@@ -80,7 +80,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "localhost", //local executon no docker!
           "Port": "9001"
         }
       ],
@@ -92,7 +92,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "localhost", //local executon no docker!
           "Port": "9001"
         }
       ],
@@ -104,7 +104,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "localhost", //local executon no docker!
           "Port": "9001"
         }
       ],
@@ -112,16 +112,16 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-//      "AuthenticationOptions": {
-//        "AuthenticationProviderKey": "EShoppingGatewayAuthScheme"
-//      }
+      //      "AuthenticationOptions": {
+      //        "AuthenticationProviderKey": "EShoppingGatewayAuthScheme"
+      //      }
     },
     {
       "DownstreamPathTemplate": "/api/v1/Basket/Checkout",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "localhost", //local executon no docker!
           "Port": "9001"
         }
       ],
@@ -140,7 +140,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "localhost", //local executon no docker!
           "Port": "9001"
         }
       ],
@@ -160,7 +160,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "localhost", //local executon no docker!
           "Port": "9002"
         }
       ],
@@ -172,7 +172,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "localhost", //local executon no docker!
           "Port": "9002"
         }
       ],
@@ -185,7 +185,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "localhost", //local executon no docker!
           "Port": "9004"
         }
       ],

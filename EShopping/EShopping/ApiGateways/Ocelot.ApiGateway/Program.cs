@@ -12,11 +12,8 @@ public class Program
             .ConfigureAppConfiguration(
                 (env, config) =>
                 {
-                    config.AddJsonFile(
-                        $"ocelot.{env.HostingEnvironment.EnvironmentName}.json",
-                        false,
-                        true
-                    );
+                    config.AddJsonFile($"ocelot.{env.HostingEnvironment.EnvironmentName}.json");
+                    config.AddEnvironmentVariables();
                 }
             )
             .ConfigureWebHostDefaults(webBuilder =>
