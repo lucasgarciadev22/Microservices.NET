@@ -48,7 +48,7 @@
         }
       ],
       "UpstreamPathTemplate": "/Catalog/GetAllBrands",
-      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]//get or also removes all brands... using multiple methods for same route
     },
     {
       "DownstreamPathTemplate": "/api/v1/Catalog/GetAllTypes",
