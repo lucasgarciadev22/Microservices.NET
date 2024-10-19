@@ -28,6 +28,13 @@ services:
       context: .
       dockerfile: ApiGateways/Ocelot.ApiGateway/Dockerfile
 
+  identityserver:
+    image: ${DOCKER_REGISTRY-}identityserver
+    build:
+      context: .
+      dockerfile: Infrastructure/EShopping.Identity/Dockerfile
+
+# APIs declarations:
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
     build:

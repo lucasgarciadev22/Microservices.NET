@@ -20,7 +20,6 @@ public class Startup(IConfiguration configuration)
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddApiVersioning();
-        services.AddAuthorization();
 
         //Healthcheckers settings
         services
@@ -62,7 +61,9 @@ public class Startup(IConfiguration configuration)
             {
                 options.Authority = "https://localhost:9009";
                 options.Audience = "Catalog";
+                options.RequireHttpsMetadata = false; //dont use https for development
             });
+        //services.AddAuthorization();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

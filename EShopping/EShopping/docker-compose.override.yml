@@ -134,10 +134,19 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development    
       - ASPNETCORE_URLS=http://0.0.0.0:80
     depends_on:
-#      - identityserver
+      - identityserver
       - catalog.api
       - basket.api
       - discount.api
       - ordering.api
     ports:
-      - "9010:80" #gloabl url 
+      - "9010:80" #global url 
+
+#identity server auth controller for managing accesses
+  identityserver:
+      container_name: identityserver
+      environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_URLS=http://*:9011      
+      ports:
+        - "9011:9011"

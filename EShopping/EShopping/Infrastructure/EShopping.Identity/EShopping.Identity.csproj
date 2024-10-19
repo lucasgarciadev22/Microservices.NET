@@ -2,12 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>1af388c8-15fa-4e73-9fa7-23a995583f1d</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<DockerfileContext>..\..\..</DockerfileContext>
+	<DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="4.1.2" />
     
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.1.5" />
+    
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
   </ItemGroup>
 
