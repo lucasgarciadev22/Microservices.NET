@@ -61,7 +61,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ocelot.ApiGateway", "ApiGat
 		{FEEAD477-3669-4C09-9B0D-B73E6751524F} = {FEEAD477-3669-4C09-9B0D-B73E6751524F}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShopping.Infrastructure", "Infrastructure\EShopping.Infrastructure\EShopping.Infrastructure.csproj", "{5C2FFDF8-EC8E-4DB4-BD3A-3237E48F142C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShopping.Identity", "Infrastructure\EShopping.Infrastructure\EShopping.Identity.csproj", "{5C2FFDF8-EC8E-4DB4-BD3A-3237E48F142C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
