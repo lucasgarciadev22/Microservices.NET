@@ -22,7 +22,7 @@ public class GetAllProductsHandler(
         CancellationToken cancellationToken
     )
     {
-        Pagination<Product> productList = await _productRepository.GetProducts(
+        Pagination<Product> productList = await _productRepository.GetAllProducts(
             request.CatalogSpecParams
         );
         Pagination<ProductResponse> productResponseList = ProductMapper.Mapper.Map<

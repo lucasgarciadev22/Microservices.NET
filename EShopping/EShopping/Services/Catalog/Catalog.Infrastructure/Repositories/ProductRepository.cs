@@ -14,7 +14,7 @@ public class ProductRepository(ICatalogContext context)
 {
     private readonly ICatalogContext _context = context;
 
-    public async Task<Pagination<Product>> GetProducts(CatalogSpecParams catalogSpecParams)
+    public async Task<Pagination<Product>> GetAllProducts(CatalogSpecParams catalogSpecParams)
     {
         FilterDefinitionBuilder<Product> builder = Builders<Product>.Filter;
         FilterDefinition<Product> filter = builder.Empty;
