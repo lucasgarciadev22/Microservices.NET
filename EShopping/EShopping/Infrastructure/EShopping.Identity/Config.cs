@@ -17,14 +17,15 @@ namespace EShopping.Infrastructure
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
-            new ApiScope[] { new ApiScope("catalogapi") };
+            new ApiScope[] { new ApiScope("catalogapi"), new ApiScope("basketapi") };
 
         //handle microservices APIs
         public static IEnumerable<ApiResource> ApiResources =>
             new ApiResource[]
             {
                 // list of microservices
-                new ApiResource("Catalog", "Catalog.API") { Scopes = { "catalogapi" } }
+                new ApiResource("Catalog", "Catalog.API") { Scopes = { "catalogapi" } },
+                new ApiResource("Basket", "Basket.API") { Scopes = { "basketapi" } }
             };
 
         public static IEnumerable<Client> Clients =>
@@ -38,6 +39,14 @@ namespace EShopping.Infrastructure
                     ClientSecrets = { new Secret("9b9311db-51ff-4b3b-b448-7e69ffe15009".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     AllowedScopes = { "catalogapi" }
+                },
+                new Client
+                {
+                    ClientName = "Basket API Client",
+                    ClientId = "BasketApiClient",
+                    ClientSecrets = { new Secret("7dbefbf0-d48d-4702-8ba0-ea40b34e06f3".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedScopes = { "basketapi" }
                 }
             };
     }

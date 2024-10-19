@@ -5,10 +5,12 @@ using Basket.Application.GrpcService;
 using Basket.Application.Handlers;
 using Basket.Core.Repositories;
 using Basket.Infrastructure.Repositories;
-using Discount.Grpc.Protos;
 using HealthChecks.UI.Client;
 using MassTransit;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -114,6 +116,20 @@ public class Startup(IConfiguration configuration)
         {
             options.OperationFilter<SwaggerDefaultValues>();
         });
+
+        //Identity Server
+        AuthorizationPolicy userPolicy = new AuthorizationPolicyBuilder()
+            .RequireAuthenticatedUser()
+            .Build();
+        services.AddControllers(config => config.Filters.Add(new AuthorizeFilter(userPolicy)));
+        services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.Authority = "https://localhost:9001";
+                options.Audience = "Basket";
+                options.RequireHttpsMetadata = false; //development
+            });
     }
 
     public void Configure(

@@ -59,11 +59,10 @@ public class Startup(IConfiguration configuration)
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
-                options.Authority = "https://localhost:9009";
+                options.Authority = "https://localhost:9000";
                 options.Audience = "Catalog";
-                options.RequireHttpsMetadata = false; //dont use https for development
+                options.RequireHttpsMetadata = false; //development
             });
-        //services.AddAuthorization();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
