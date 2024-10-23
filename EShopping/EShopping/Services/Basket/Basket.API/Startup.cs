@@ -129,8 +129,18 @@ public class Startup(IConfiguration configuration)
             {
                 options.Authority = "https://localhost:9001";
                 options.Audience = "Basket";
-                options.RequireHttpsMetadata = false; //development
+                //options.RequireHttpsMetadata = false; //development
             });
+        //services.AddAuthorization(
+        //    (options) =>
+        //    {
+        //        //require scope level operation types
+        //        options.AddPolicy(
+        //            "CanRead",
+        //            policy => policy.RequireClaim("scope", "basketapi.read")
+        //        );
+        //    }
+        //);
     }
 
     public void Configure(

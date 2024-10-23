@@ -61,8 +61,18 @@ public class Startup(IConfiguration configuration)
             {
                 options.Authority = "https://localhost:9000";
                 options.Audience = "Catalog";
-                options.RequireHttpsMetadata = false; //development
+                //options.RequireHttpsMetadata = false; //development
             });
+        services.AddAuthorization(
+            (options) =>
+            {
+                //require scope level operation types
+                options.AddPolicy(
+                    "CanRead",
+                    policy => policy.RequireClaim("scope", "catalogapi.read")
+                );
+            }
+        );
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
