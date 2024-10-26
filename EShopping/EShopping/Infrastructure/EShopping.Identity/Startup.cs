@@ -5,6 +5,7 @@
 using IdentityServerHost.Quickstart.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -66,6 +67,15 @@ namespace EShopping.Infrastructure
 
         public void Configure(IApplicationBuilder app)
         {
+            //Nginx reverse proxy handlings
+            ForwardedHeadersOptions fowardedHeaderOptions = new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            };
+            fowardedHeaderOptions.KnownNetworks.Clear();
+            fowardedHeaderOptions.KnownProxies.Clear();
+            app.UseForwardedHeaders(fowardedHeaderOptions);
+
             if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

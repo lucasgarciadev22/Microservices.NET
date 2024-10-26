@@ -51,7 +51,7 @@ services:
       ACCEPT_EULA: "Y"
     restart: always
     ports:
-      - "1433:1433"
+      - "1434:1433"
 
 #rabbit mq services tha will be communicating ordering api with basket api trough event bus messages project
   rabbitmq:
@@ -160,6 +160,6 @@ services:
       container_name: identityserver
       environment:
         - ASPNETCORE_ENVIRONMENT=Development
-        - ASPNETCORE_URLS=http://*:9011      
+        - ASPNETCORE_URLS=http://0.0.0.0:9011    
       ports:
         - "9011:9011"
