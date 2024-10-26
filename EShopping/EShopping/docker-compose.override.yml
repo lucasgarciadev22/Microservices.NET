@@ -12,7 +12,7 @@ services:
       - discount.api
       - ordering.api
     ports:
-      - "9200:9100"
+      - "44344:433" #nginx map local port to https port
        
 #mongodb based database for catalog api
   catalogdb:
