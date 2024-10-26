@@ -24,25 +24,31 @@ namespace EShopping.Infrastructure
                 new ApiScope("catalogapi.read"),
                 new ApiScope("catalogapi.write"),
                 //basket operations
-                new ApiScope("basketapi")
+                new ApiScope("basketapi"),
+                //ocelot api gateway operations
+                new ApiScope("eshoppinggateway"),
             };
 
         //handle microservices APIs
         public static IEnumerable<ApiResource> ApiResources =>
             new ApiResource[]
             {
-                // list of microservices
+                // list of microservices scopes
                 new ApiResource("Catalog", "Catalog.API")
                 {
                     Scopes = { "catalogapi.read", "catalogapi.write" }
                 },
-                new ApiResource("Basket", "Basket.API") { Scopes = { "basketapi" } }
+                new ApiResource("Basket", "Basket.API") { Scopes = { "basketapi" } },
+                new ApiResource("EShoppingGateway", "EShopping Gateway")
+                {
+                    Scopes = { "eshoppinggateway", "basketapi" }
+                },
             };
 
         public static IEnumerable<Client> Clients =>
             new Client[]
             {
-                //machine to machine flow
+                //machine to machine flow for each client
                 new Client
                 {
                     ClientName = "Catalog API Client",
@@ -58,7 +64,15 @@ namespace EShopping.Infrastructure
                     ClientSecrets = { new Secret("7dbefbf0-d48d-4702-8ba0-ea40b34e06f3".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     AllowedScopes = { "basketapi" }
-                }
+                },
+                new Client
+                {
+                    ClientName = "EShopping Gateway Client",
+                    ClientId = "EShoppingGatewayClient",
+                    ClientSecrets = { new Secret("5c7fd5c5-61a7-4668-ac57-2b4591ec26d2".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedScopes = { "eshoppinggateway", "basketapi" }
+                },
             };
     }
 }

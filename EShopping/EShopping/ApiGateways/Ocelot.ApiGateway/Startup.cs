@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Ocelot.Cache.CacheManager;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
@@ -18,6 +19,20 @@ public class Startup
                 }
             );
         });
+
+        //Identity Server changes
+        string authScheme = "EShoppingGatewayAuthScheme";
+        services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(
+                authScheme,
+                options =>
+                {
+                    options.Authority = "https://localhost:9010";
+                    options.Audience = "EShoppingGateway";
+                }
+            );
+
         services.AddOcelot().AddCacheManager(o => o.WithDictionaryHandle());
     }
 
