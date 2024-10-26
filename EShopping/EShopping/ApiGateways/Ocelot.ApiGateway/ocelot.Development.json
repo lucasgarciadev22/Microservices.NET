@@ -111,7 +111,7 @@
       "UpstreamPathTemplate": "/Basket/CreateBasket",
       "UpstreamHttpMethod": [ "POST" ]
       //      "AuthenticationOptions": {
-      //        "AuthenticationProviderKey": "EShoppingGatewayAuthScheme"
+      //        "AuthenticationProviderKey": "EShoppingGatewayAuthScheme" //delegate auth 
       //      }
     },
     {

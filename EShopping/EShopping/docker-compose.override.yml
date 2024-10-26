@@ -1,6 +1,19 @@
 version: '3.4'
 
 services:
+#nginx reverse proxy service
+  reverseproxy:
+    container_name: nginxgateway
+    restart: always
+    depends_on:
+      - identityserver
+      - catalog.api
+      - basket.api
+      - discount.api
+      - ordering.api
+    ports:
+      - "9200:9100"
+       
 #mongodb based database for catalog api
   catalogdb:
     container_name: catalogdb
