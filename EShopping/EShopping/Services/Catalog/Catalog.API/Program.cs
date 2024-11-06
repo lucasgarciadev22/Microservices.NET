@@ -1,20 +1,80 @@
-using System.Diagnostics;
+using Asp.Versioning;
+using Catalog.Application.Handlers;
+using Catalog.Core.Repositories;
+using Catalog.Infrastructure.Data;
+using Catalog.Infrastructure.Repositories;
+using Common.Logging;
+using Serilog;
+using System.Reflection;
 
-namespace Catalog.API;
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-public class Program
+// Add services to the container.
+
+//Add Cors
+builder.Services.AddCors(options =>
 {
-    public static void Main(string[] args)
-    {
-        Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+    options.AddPolicy(
+        "CorsPolicy",
+        policy =>
+        {
+            policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+        }
+    );
+});
 
-        CreateHostBuilder(args).Build().Run();
-    }
+//Serilog configuration
+builder.Host.UseSerilog(Logging.Configure);
 
-    private static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            });
+builder.Services.AddControllers();
+
+// Add API Versioning
+builder.Services.AddApiVersioning(options =>
+{
+    options.ReportApiVersions = true;
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+});
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc(
+        "v1",
+        new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Catalog.API", Version = "v1" }
+    );
+});
+
+//Register AutoMapper
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+//Register Mediatr
+Assembly[] assemblies =
+[
+    Assembly.GetExecutingAssembly(),
+    typeof(GetAllBrandsHandler).Assembly
+];
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assemblies));
+
+//Register Application Services
+builder.Services.AddScoped<ICatalogContext, CatalogContext>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IBrandRepository, ProductRepository>();
+builder.Services.AddScoped<ITypesRepository, ProductRepository>();
+
+WebApplication app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+app.UseCors("CorsPolicy");
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();

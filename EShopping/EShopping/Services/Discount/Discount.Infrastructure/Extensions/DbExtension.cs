@@ -13,13 +13,13 @@ public static class DbExtension
     /// </summary>
     /// <param name="host">The host configurations to instantiate the migration</param>
     /// <returns></returns>
-    public static IHost MigratedDatabase<TContext>(this IHost host)
+    public static IHost MigrateDatabase<TContext>(this IHost host)
     {
-        using (var scope = host.Services.CreateScope())
+        using (IServiceScope scope = host.Services.CreateScope())
         {
-            var services = scope.ServiceProvider;
-            var config = services.GetRequiredService<IConfiguration>();
-            var logger = services.GetRequiredService<ILogger<TContext>>(); //passes whatever the context as type
+            IServiceProvider services = scope.ServiceProvider;
+            IConfiguration config = services.GetRequiredService<IConfiguration>();
+            ILogger<TContext> logger = services.GetRequiredService<ILogger<TContext>>(); //passes whatever the context as type
             try
             {
                 logger.LogInformation("Discount DB Migration Started");
@@ -38,14 +38,14 @@ public static class DbExtension
 
     private static void ApplyMigration(IConfiguration config)
     {
-        using var connection = new NpgsqlConnection(
+        using NpgsqlConnection connection = new NpgsqlConnection(
             config.GetValue<string>("DatabaseSettings:ConnectionString")
         ); //get the connection string from JSON
         connection.Open();
 
         //Create new command for managing the migration
 
-        using var command = new NpgsqlCommand() { Connection = connection, };
+        using NpgsqlCommand command = new NpgsqlCommand() { Connection = connection, };
 
         command.CommandText = "DROP TABLE IF EXISTS Coupon";
         command.ExecuteNonQuery();

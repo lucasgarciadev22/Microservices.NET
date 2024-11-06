@@ -7,10 +7,10 @@ using MediatR;
 
 namespace Catalog.Application.Handlers;
 
-public class GetAllTypesHandler(ITypeRepository typesRepository)
+public class GetAllTypesHandler(ITypesRepository typesRepository)
     : IRequestHandler<GetAllTypesQuery, IList<TypeResponse>>
 {
-    private readonly ITypeRepository _typesRepository = typesRepository;
+    private readonly ITypesRepository _typesRepository = typesRepository;
 
     public async Task<IList<TypeResponse>> Handle(
         GetAllTypesQuery request,

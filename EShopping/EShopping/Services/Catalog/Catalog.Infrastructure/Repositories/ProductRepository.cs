@@ -10,7 +10,7 @@ namespace Catalog.Infrastructure.Repositories;
 public class ProductRepository(ICatalogContext context)
     : IProductRepository,
         IBrandRepository,
-        ITypeRepository
+        ITypesRepository
 {
     private readonly ICatalogContext _context = context;
 

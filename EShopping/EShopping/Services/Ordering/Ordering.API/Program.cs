@@ -1,30 +1,115 @@
+using Asp.Versioning;
+using Common.Logging;
+using EventBus.Messages.Common;
+using MassTransit;
+using Ordering.API.EventBusConsumer;
 using Ordering.API.Extensions;
+using Ordering.Application.Services;
 using Ordering.Infrastructure.Data;
+using Ordering.Infrastructure.Services;
+using Serilog;
 
-namespace Ordering.API;
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-public class Program
+// Add services to the container.
+//Add Cors
+builder.Services.AddCors(options =>
 {
-    public static void Main(string[] args)
-    {
-        CreateHostBuilder(args)
-            .Build()
-            .MigrateDatabase<OrderContext>(
-                (context, services) =>
-                {
-                    ILogger<OrderContextSeed> logger = services.GetService<
-                        ILogger<OrderContextSeed>
-                    >();
-                    OrderContextSeed.SeedAsync(context, logger).Wait();
-                }
-            )
-            .Run();
-    }
+    options.AddPolicy(
+        "CorsPolicy",
+        policy =>
+        {
+            policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+        }
+    );
+});
 
-    private static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            });
+//Serilog configuration
+builder.Host.UseSerilog(Logging.Configure);
+
+builder.Services.AddControllers();
+
+// Add API Versioning
+builder.Services.AddApiVersioning(options =>
+{
+    options.ReportApiVersions = true;
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+});
+
+//Application Services
+builder.Services.AddApplicationServices();
+
+//Infra services
+builder.Services.AddInfraServices(builder.Configuration);
+
+//Consumer class
+builder.Services.AddScoped<BasketOrderingConsumer>();
+
+//builder.Services.AddScoped<BasketOrderingConsumerV2>();
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc(
+        "v1",
+        new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Ordering.API", Version = "v1" }
+    );
+});
+
+//Mass Transit
+builder.Services.AddMassTransit(config =>
+{
+    //Mark this as consumer
+    config.AddConsumer<BasketOrderingConsumer>();
+    //config.AddConsumer<BasketOrderingConsumerV2>();
+    config.UsingRabbitMq(
+        (ctx, cfg) =>
+        {
+            cfg.Host(builder.Configuration["EventBusSettings:HostAddress"]);
+            //provide the queue name with cosumer settings
+            cfg.ReceiveEndpoint(
+                EventBusConstants.BasketCheckoutQueue,
+                c =>
+                {
+                    c.ConfigureConsumer<BasketOrderingConsumer>(ctx);
+                }
+            );
+            //V2 Version
+            cfg.ReceiveEndpoint(
+                EventBusConstants.BasketCheckoutQueueV2,
+                c =>
+                {
+                    //c.ConfigureConsumer<BasketOrderingConsumerV2>(ctx);
+                }
+            );
+        }
+    );
+});
+builder.Services.AddMassTransitHostedService();
+
+WebApplication app = builder.Build();
+
+//Apply db migration
+app.MigrateDatabase<OrderContext>(
+    (context, services) =>
+    {
+        ILogger<OrderContextSeed>? logger = services.GetService<ILogger<OrderContextSeed>>();
+        OrderContextSeed.SeedAsync(context, logger).Wait();
+    }
+);
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+app.UseCors("CorsPolicy");
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
