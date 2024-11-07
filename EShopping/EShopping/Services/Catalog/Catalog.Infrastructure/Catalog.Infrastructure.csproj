@@ -7,12 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Remove="Data\SeedData\brands.json" />
-      <None Remove="Data\SeedData\products.json" />
-      <None Remove="Data\SeedData\types.json" />
-    </ItemGroup>
-
-    <ItemGroup>
       <EmbeddedResource Include="Data\SeedData\brands.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </EmbeddedResource>
