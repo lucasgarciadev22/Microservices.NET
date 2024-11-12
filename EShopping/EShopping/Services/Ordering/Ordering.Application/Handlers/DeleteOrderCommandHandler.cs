@@ -22,7 +22,7 @@ public class DeleteOrderCommandHandler(
             ?? throw new OrderNotFoundException(string.Empty, $"{request.Id}");
 
         await _orderRepository.DeleteAsync(orderToDelete);
-        _logger.LogInformation("Order with Id {RequestId} was deleted successfully", request.Id);
+        _logger.LogInformation("Order {OrderId} was successfully deleted", request.Id);
 
         return Unit.Value;
     }

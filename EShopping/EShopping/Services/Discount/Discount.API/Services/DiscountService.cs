@@ -21,7 +21,7 @@ public class DiscountService(IMediator mediator, ILogger<DiscountService> logger
         CouponModel result = await _mediator.Send(query);
 
         _logger.LogInformation(
-            "Discount was found for the product name: {ProductName} and the amount is: {Amount}",
+            "Discount was found for the product name: {ProductName} and the amount is: {ProductAmount}",
             request.ProductName,
             result.Amount
         );

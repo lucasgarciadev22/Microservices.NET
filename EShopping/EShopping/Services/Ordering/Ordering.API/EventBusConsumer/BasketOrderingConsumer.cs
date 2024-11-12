@@ -29,7 +29,8 @@ public class BasketOrderingConsumer : IConsumer<BasketCheckoutEvent>
         CheckoutOrderCommand command = _mapper.Map<CheckoutOrderCommand>(context.Message);
         int result = await _mediator.Send(command);
         _logger.LogInformation(
-            $"BasketCheckoutEvent consumed successfully. Created Order Id: {result}"
+            "BasketCheckoutEvent consumed successfully. Created Order Id: {OrderId}",
+            result
         );
     }
 }
