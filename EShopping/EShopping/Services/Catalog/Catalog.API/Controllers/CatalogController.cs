@@ -8,9 +8,11 @@ using System.Net;
 
 namespace Catalog.API.Controllers;
 
-public class CatalogController(IMediator mediator) : ApiController
+public class CatalogController(IMediator mediator, ILogger<CatalogController> logger)
+    : ApiController
 {
     private readonly IMediator _mediator = mediator;
+    private readonly ILogger<CatalogController> _logger = logger;
 
     [HttpGet]
     [Route("[action]/{productId}", Name = "GetProductById")]
@@ -29,6 +31,7 @@ public class CatalogController(IMediator mediator) : ApiController
     {
         GetProductByNameQuery query = new(productName);
         IList<ProductResponse> result = await _mediator.Send(query);
+        _logger.LogInformation("Product with {ProductName} fetched", productName);
         return Ok(result);
     }
 

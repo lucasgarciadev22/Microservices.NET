@@ -11,10 +11,15 @@ using System.Net;
 
 namespace Basket.API.Controllers;
 
-public class BasketController(IMediator mediator, IPublishEndpoint publishEndpoint) : ApiController
+public class BasketController(
+    IMediator mediator,
+    IPublishEndpoint publishEndpoint,
+    ILogger<BasketController> logger
+) : ApiController
 {
     private readonly IMediator _mediator = mediator;
     private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
+    private readonly ILogger<BasketController> _logger = logger;
 
     [HttpGet]
     [Route("[action]/{userName}", Name = "GetBasket")]
@@ -64,7 +69,7 @@ public class BasketController(IMediator mediator, IPublishEndpoint publishEndpoi
         eventMessage.TotalPrice = basket.TotalPrice;
 
         await _publishEndpoint.Publish(eventMessage);
-
+        _logger.LogInformation("Basket published for {UserName}", basket.UserName);
         DeleteBasketByUserNameCommand deleteBasket = new(basketCheckout.UserName);
         await _mediator.Send(deleteBasket);
 

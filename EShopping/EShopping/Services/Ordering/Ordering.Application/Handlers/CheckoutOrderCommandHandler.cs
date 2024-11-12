@@ -22,7 +22,7 @@ public class CheckoutOrderCommandHandler(
         Order orderToAdd = _mapper.Map<Order>(request);
         Order addedOrder = await _orderRepository.AddAsync(orderToAdd);
 
-        _logger.LogInformation("Order {GeneratedOrder} successfully created.", addedOrder);
+        _logger.LogInformation("Order {OrderId} successfully created.", addedOrder.Id);
 
         return addedOrder.Id;
     }
