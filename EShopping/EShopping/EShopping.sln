@@ -69,7 +69,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{FE4A1FE7
 		ApiGateways\nginx\nginx.local.conf = ApiGateways\nginx\nginx.local.conf
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Logging", "..\Common.Logging\Common.Logging.csproj", "{6FAC605A-746B-4F3C-989E-C7E42A668A09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Logging", "Infrastructure\Common.Logging\Common.Logging.csproj", "{2F6FDC87-EFD6-4DAA-8461-B70019862295}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -157,10 +157,10 @@ Global
 		{5C2FFDF8-EC8E-4DB4-BD3A-3237E48F142C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C2FFDF8-EC8E-4DB4-BD3A-3237E48F142C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C2FFDF8-EC8E-4DB4-BD3A-3237E48F142C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6FAC605A-746B-4F3C-989E-C7E42A668A09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6FAC605A-746B-4F3C-989E-C7E42A668A09}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6FAC605A-746B-4F3C-989E-C7E42A668A09}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6FAC605A-746B-4F3C-989E-C7E42A668A09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F6FDC87-EFD6-4DAA-8461-B70019862295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F6FDC87-EFD6-4DAA-8461-B70019862295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F6FDC87-EFD6-4DAA-8461-B70019862295}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F6FDC87-EFD6-4DAA-8461-B70019862295}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -190,7 +190,7 @@ Global
 		{E49681BA-1F0A-4DCA-8934-195693081F50} = {3923C663-1563-4707-BC87-01DAC1C74467}
 		{5C2FFDF8-EC8E-4DB4-BD3A-3237E48F142C} = {D8600466-F2D2-4BCB-BCAC-4DFE1CEAA89F}
 		{FE4A1FE7-EE2E-442F-A153-6975A5A4850B} = {3923C663-1563-4707-BC87-01DAC1C74467}
-		{6FAC605A-746B-4F3C-989E-C7E42A668A09} = {D8600466-F2D2-4BCB-BCAC-4DFE1CEAA89F}
+		{2F6FDC87-EFD6-4DAA-8461-B70019862295} = {D8600466-F2D2-4BCB-BCAC-4DFE1CEAA89F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C249E15-09D8-44E2-952B-662B13E25E49}

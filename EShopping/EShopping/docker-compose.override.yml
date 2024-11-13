@@ -95,6 +95,7 @@ services:
       - "DatabaseSettings__CollectionName=Products"
       - "DatabaseSettings__BrandsCollection=Brands"
       - "DatabaseSettings__TypesCollection=Types"
+      - "ElasticConfiguration__Uri=http://elasticsearch:9200" 
     depends_on:
       - catalogdb
     ports:
@@ -109,6 +110,7 @@ services:
       - "CacheSettings__ConnectionString=basketdb:6379"
       - "GrpcSettings__DiscountUrl=http://discount.api"
       - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672"
+      - "ElasticConfiguration__Uri=http://elasticsearch:9200" 
     depends_on:
       - basketdb
       - rabbitmq
@@ -121,7 +123,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - "DatabaseSettings__ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=Password@1;"       
+      - "DatabaseSettings__ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=Password@1;"  
+      - "ElasticConfiguration__Uri=http://elasticsearch:9200"  
     depends_on:
       - discountdb
     ports:
@@ -135,10 +138,34 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - "ConnectionStrings__OrderingConnectionString=Server=orderingdb;Database=OrderingDb;User Id=sa;Password=Lucas*12345;TrustServerCertificate=True"
       - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672"
+      - "ElasticConfiguration__Uri=http://elasticsearch:9200" 
     depends_on:
      - orderingdb
+     - rabbitmq
     ports:
      - "9003:80"
+
+#elastic search configs, providing tools to search and manage log files from serilog
+  elasticsearch:
+    container_name: elasticsearch
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+
+#kibana configs, providing a monitoring plataform for the whole project
+  kibana:
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5601:5601" 
 
 #ocelot api gateway for redirecting routes and managing 
   ocelotapigw:
@@ -147,7 +174,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development    
       - ASPNETCORE_URLS=http://0.0.0.0:80
     depends_on:
-      - identityserver
+      # - identityserver
       - catalog.api
       - basket.api
       - discount.api
@@ -155,11 +182,11 @@ services:
     ports:
       - "9010:80" #global url 
 
-#identity server auth controller for managing accesses
-  identityserver:
-      container_name: identityserver
-      environment:
-        - ASPNETCORE_ENVIRONMENT=Development
-        - ASPNETCORE_URLS=http://0.0.0.0:9011    
-      ports:
-        - "9011:9011"
+# #identity server auth controller for managing accesses
+#   identityserver:
+#       container_name: identityserver
+#       environment:
+#         - ASPNETCORE_ENVIRONMENT=Development
+#         - ASPNETCORE_URLS=http://0.0.0.0:9011    
+#       ports:
+#         - "9011:9011"
