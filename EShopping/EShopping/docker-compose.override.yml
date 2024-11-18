@@ -42,6 +42,11 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 #sqlserver based database for ordering api
   orderingdb:
@@ -52,6 +57,13 @@ services:
     restart: always
     ports:
       - "1434:1433"
+    volumes:
+      - orderingdb_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'Rahul1234567' -Q 'select 1'"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
 
 #rabbit mq services tha will be communicating ordering api with basket api trough event bus messages project
   rabbitmq:
@@ -126,7 +138,8 @@ services:
       - "DatabaseSettings__ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=Password@1;"  
       - "ElasticConfiguration__Uri=http://elasticsearch:9200"  
     depends_on:
-      - discountdb
+       discountdb:
+         condition: service_healthy
     ports:
       - "9002:80"
 
