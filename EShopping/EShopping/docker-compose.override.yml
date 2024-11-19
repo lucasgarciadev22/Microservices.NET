@@ -60,7 +60,7 @@ services:
     volumes:
       - orderingdb_data:/var/opt/mssql
     healthcheck:
-      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'Rahul1234567' -Q 'select 1'"]
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'Lucas*12345' -Q 'select 1'"]
       interval: 10s
       timeout: 10s
       retries: 3
