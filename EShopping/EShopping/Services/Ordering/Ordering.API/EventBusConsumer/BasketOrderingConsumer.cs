@@ -25,6 +25,11 @@ public class BasketOrderingConsumer : IConsumer<BasketCheckoutEvent>
 
     public async Task Consume(ConsumeContext<BasketCheckoutEvent> context)
     {
+        using IDisposable? scope = _logger.BeginScope(
+            "Consuming Basket Checkout Event for {CorrelationId}",
+            context.Message.CorrelationId
+        );
+
         //create consume command based on checkout event received
         CheckoutOrderCommand command = _mapper.Map<CheckoutOrderCommand>(context.Message);
         int result = await _mediator.Send(command);

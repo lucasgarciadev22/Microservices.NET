@@ -181,19 +181,19 @@ services:
       - "5601:5601" 
 
 #ocelot api gateway for redirecting routes and managing 
-  ocelotapigw:
-    container_name: ocelotapigw
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development    
-      - ASPNETCORE_URLS=http://0.0.0.0:80
-    depends_on:
-      # - identityserver
-      - catalog.api
-      - basket.api
-      - discount.api
-      - ordering.api
-    ports:
-      - "9010:80" #global url 
+  # ocelotapigw:
+  #   container_name: ocelotapigw
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development    
+  #     - ASPNETCORE_URLS=http://0.0.0.0:80
+  #   depends_on:
+  #     # - identityserver
+  #     - catalog.api
+  #     - basket.api
+  #     - discount.api
+  #     - ordering.api
+  #   ports:
+  #     - "9010:80" #global url 
 
 # #identity server auth controller for managing accesses
 #   identityserver:

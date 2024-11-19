@@ -27,11 +27,11 @@ services:
   portainer:
     image: portainer/portainer-ce
 
-  ocelotapigw:
-    image: ${DOCKER_REGISTRY-}ocelotapigw
-    build:
-      context: .
-      dockerfile: ApiGateways/Ocelot.ApiGateway/Dockerfile
+  # ocelotapigw:
+  #   image: ${DOCKER_REGISTRY-}ocelotapigw
+  #   build:
+  #     context: .
+  #     dockerfile: ApiGateways/Ocelot.ApiGateway/Dockerfile
 
   # identityserver:
   #   image: ${DOCKER_REGISTRY-}identityserver

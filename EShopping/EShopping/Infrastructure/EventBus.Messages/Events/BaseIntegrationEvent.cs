@@ -2,18 +2,18 @@
 
 public class BaseIntegrationEvent
 {
-    public Guid Id { get; }
+    public string CorrelationId { get; set; }
     public DateTime CreationDate { get; set; }
 
     public BaseIntegrationEvent()
     {
-        Id = Guid.NewGuid();
+        CorrelationId = Guid.NewGuid().ToString();
         CreationDate = DateTime.UtcNow;
     }
 
-    public BaseIntegrationEvent(Guid id, DateTime creationDate)
+    public BaseIntegrationEvent(Guid correlationId, DateTime creationDate)
     {
-        Id = id;
+        CorrelationId = correlationId.ToString();
         CreationDate = creationDate;
     }
 }
