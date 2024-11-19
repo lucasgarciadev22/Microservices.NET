@@ -18,11 +18,11 @@ builder.Host.UseSerilog(Logging.Configure);
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 //Register Mediatr
-Assembly[] assemblies = new Assembly[]
-{
+Assembly[] assemblies =
+[
     Assembly.GetExecutingAssembly(),
     typeof(CreateDiscountCommandHandler).Assembly
-};
+];
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assemblies));
 builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
 builder.Services.AddGrpc();
