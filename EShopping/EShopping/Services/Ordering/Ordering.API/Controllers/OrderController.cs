@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Ordering.Application.Commands;
@@ -7,6 +8,7 @@ using System.Net;
 
 namespace Ordering.API.Controllers;
 
+[ApiVersion("1")]
 public class OrderController(IMediator mediator) : ApiController
 {
     private readonly IMediator _mediator = mediator;

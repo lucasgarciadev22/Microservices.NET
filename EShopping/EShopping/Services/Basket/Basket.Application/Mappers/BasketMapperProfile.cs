@@ -12,5 +12,6 @@ public class BasketMapperProfile : Profile
         CreateMap<ShoppingCart, ShoppingCartResponse>().ReverseMap();
         CreateMap<ShoppingCartItem, ShoppingCartItemResponse>().ReverseMap();
         CreateMap<BasketCheckout, BasketCheckoutEvent>().ReverseMap();
+        CreateMap<BasketCheckoutV2, BasketCheckoutEvent>().ReverseMap();
     }
 }

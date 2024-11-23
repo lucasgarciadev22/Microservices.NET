@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using Catalog.Application.Commands;
 using Catalog.Application.Queries;
 using Catalog.Application.Responses;
@@ -8,6 +9,7 @@ using System.Net;
 
 namespace Catalog.API.Controllers;
 
+[ApiVersion("1")]
 public class CatalogController(IMediator mediator, ILogger<CatalogController> logger)
     : ApiController
 {

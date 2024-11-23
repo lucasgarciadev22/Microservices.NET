@@ -63,7 +63,7 @@ builder.Services.AddMassTransit(config =>
 {
     //Mark this as consumer
     config.AddConsumer<BasketOrderingConsumer>();
-    //config.AddConsumer<BasketOrderingConsumerV2>();
+    config.AddConsumer<BasketOrderingConsumerV2>();
     config.UsingRabbitMq(
         (ctx, cfg) =>
         {
@@ -81,7 +81,7 @@ builder.Services.AddMassTransit(config =>
                 EventBusConstants.BasketCheckoutQueueV2,
                 c =>
                 {
-                    //c.ConfigureConsumer<BasketOrderingConsumerV2>(ctx);
+                    c.ConfigureConsumer<BasketOrderingConsumerV2>(ctx);
                 }
             );
         }

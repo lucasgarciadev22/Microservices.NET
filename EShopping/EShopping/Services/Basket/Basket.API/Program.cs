@@ -135,7 +135,9 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v2/swagger.json", "Basket.API v2");
     });
 }
+
 app.UseCors("CorsPolicy");
+
 app.UseAuthorization();
 
 app.MapControllers();
