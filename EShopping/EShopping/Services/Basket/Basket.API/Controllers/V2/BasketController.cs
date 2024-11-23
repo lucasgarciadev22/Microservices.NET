@@ -43,7 +43,7 @@ public class BasketController : ApiController
             return BadRequest();
         }
 
-        BasketCheckoutEventV2 eventMsg = BasketMapper.Mapper.Map<BasketCheckoutEventV2>(
+        BasketCheckoutV2Event eventMsg = BasketMapper.Mapper.Map<BasketCheckoutV2Event>(
             basketCheckout
         );
         eventMsg.TotalPrice = basket.TotalPrice;

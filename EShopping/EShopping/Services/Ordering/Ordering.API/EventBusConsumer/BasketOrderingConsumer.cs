@@ -6,27 +6,20 @@ using Ordering.Application.Commands;
 
 namespace Ordering.API.EventBusConsumer;
 
-public class BasketOrderingConsumer : IConsumer<BasketCheckoutEvent>
+public class BasketOrderingConsumer(
+    IMediator mediator,
+    IMapper mapper,
+    ILogger<BasketOrderingConsumer> logger
+) : IConsumer<BasketCheckoutEvent>
 {
-    private readonly IMediator _mediator;
-    private readonly IMapper _mapper;
-    private readonly ILogger<BasketOrderingConsumer> _logger;
-
-    public BasketOrderingConsumer(
-        IMediator mediator,
-        IMapper mapper,
-        ILogger<BasketOrderingConsumer> logger
-    )
-    {
-        _mediator = mediator;
-        _mapper = mapper;
-        _logger = logger;
-    }
+    private readonly IMediator _mediator = mediator;
+    private readonly IMapper _mapper = mapper;
+    private readonly ILogger<BasketOrderingConsumer> _logger = logger;
 
     public async Task Consume(ConsumeContext<BasketCheckoutEvent> context)
     {
         using IDisposable? scope = _logger.BeginScope(
-            "Consuming Basket Checkout Event for {CorrelationId}",
+            "Consuming Basket Checkout Event (v1) for {CorrelationId}",
             context.Message.CorrelationId
         );
 
@@ -34,7 +27,7 @@ public class BasketOrderingConsumer : IConsumer<BasketCheckoutEvent>
         CheckoutOrderCommand command = _mapper.Map<CheckoutOrderCommand>(context.Message);
         int result = await _mediator.Send(command);
         _logger.LogInformation(
-            "BasketCheckoutEvent consumed successfully. Created Order Id: {OrderId}",
+            "Basket Checkout Event (v1) consumed successfully. Created Order Id: {OrderId}",
             result
         );
     }
