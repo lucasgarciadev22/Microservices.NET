@@ -5,7 +5,7 @@ using Ordering.Application.Behaviour;
 using Ordering.Application.Handlers;
 using System.Reflection;
 
-namespace Ordering.Application.Services;
+namespace Ordering.Application.Extensions;
 
 public static class AppServicesRegistration
 {

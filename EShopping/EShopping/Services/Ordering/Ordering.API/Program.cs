@@ -4,7 +4,7 @@ using EventBus.Messages.Common;
 using MassTransit;
 using Ordering.API.EventBusConsumer;
 using Ordering.API.Extensions;
-using Ordering.Application.Services;
+using Ordering.Application.Extensions;
 using Ordering.Infrastructure.Data;
 using Ordering.Infrastructure.Services;
 using Serilog;
@@ -45,8 +45,7 @@ builder.Services.AddInfraServices(builder.Configuration);
 
 //Consumer class
 builder.Services.AddScoped<BasketOrderingConsumer>();
-
-//builder.Services.AddScoped<BasketOrderingConsumerV2>();
+builder.Services.AddScoped<BasketOrderingV2Consumer>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
