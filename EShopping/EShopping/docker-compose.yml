@@ -27,7 +27,7 @@ services:
   portainer:
     image: portainer/portainer-ce
 
-  ocelotapigw:
+  ocelot.apigateway:
     image: ${DOCKER_REGISTRY-}ocelotapigw
     build:
       context: .
