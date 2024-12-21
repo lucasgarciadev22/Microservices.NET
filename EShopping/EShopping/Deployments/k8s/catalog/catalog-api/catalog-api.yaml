@@ -20,34 +20,35 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
+          # setting the mapping keys from docker-compose file (catalog.api service). Based on mongo-configmap.yaml
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Development
             - name: DatabaseSettings__ConnectionString
               valueFrom:
-                  configMapKeyRef:
-                    name: mongo-configmap
-                    key: connection_string
+                configMapKeyRef:
+                  name: mongo-configmap
+                  key: connection_string
             - name: DatabaseSettings__DatabaseName
               valueFrom:
-                  configMapKeyRef:
-                    name: mongo-configmap
-                    key: DatabaseName
+                configMapKeyRef:
+                  name: mongo-configmap
+                  key: DatabaseName
             - name: DatabaseSettings__CollectionName
               valueFrom:
-                  configMapKeyRef:
-                    name: mongo-configmap
-                    key: CollectionName
+                configMapKeyRef:
+                  name: mongo-configmap
+                  key: CollectionName
             - name: DatabaseSettings__BrandsCollection
               valueFrom:
-                  configMapKeyRef:
-                    name: mongo-configmap
-                    key: BrandsCollection
+                configMapKeyRef:
+                  name: mongo-configmap
+                  key: BrandsCollection
             - name: DatabaseSettings__TypesCollection
               valueFrom:
-                  configMapKeyRef:
-                    name: mongo-configmap
-                    key: TypesCollection            
+                configMapKeyRef:
+                  name: mongo-configmap
+                  key: TypesCollection
           resources:
             requests:
               memory: "64Mi"

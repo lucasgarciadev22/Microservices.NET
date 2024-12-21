@@ -1,7 +1,9 @@
 apiVersion: v1
+#check types in k8s documentation
 kind: ConfigMap
 metadata:
   name: mongo-configmap
+# this data is used as value on catalog-api.yaml config mapping section
 data:
   connection_string: mongodb://username:password@mongo-service:27017
   DatabaseName: CatalogDb
