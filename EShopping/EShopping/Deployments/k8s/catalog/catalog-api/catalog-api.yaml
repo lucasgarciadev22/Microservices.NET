@@ -20,7 +20,6 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
-          # setting the mapping keys from docker-compose file (catalog.api service). Based on mongo-configmap.yaml
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Development
@@ -67,6 +66,6 @@ spec:
     app: catalog-api
   ports:
     - protocol: TCP
-      port: 8000
+      port: 9000
       targetPort: 80
       nodePort: 31000

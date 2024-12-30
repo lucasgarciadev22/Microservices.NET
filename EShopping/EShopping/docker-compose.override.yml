@@ -105,7 +105,6 @@ services:
     container_name: catalog.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://0.0.0.0:80
       - "DatabaseSettings__ConnectionString=mongodb://catalogdb:27017"
       - "DatabaseSettings__DatabaseName=CatalogDb"
       - "DatabaseSettings__CollectionName=Products"
@@ -115,44 +114,41 @@ services:
     depends_on:
       - catalogdb
     ports:
-      - "9000:80"
+      - "9000:8080"
 
   #basket api data context configs, providing appsettings.json values to container context including cache and grpc client settings
   basket.api:
     container_name: basket.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://0.0.0.0:80
       - "CacheSettings__ConnectionString=basketdb:6379"
-      - "GrpcSettings__DiscountUrl=http://discount.api"
+      - "GrpcSettings__DiscountUrl=http://discount.api:8080"
       - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672"
       - "ElasticConfiguration__Uri=http://elasticsearch:9200"
     depends_on:
       - basketdb
       - rabbitmq
     ports:
-      - "9001:80"
+      - "9001:8080"
 
   #discount api data context configs, providing appsettings.json values to container context including postgresql settings
   discount.api:
     container_name: discount.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://0.0.0.0:80
       - "DatabaseSettings__ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=Password@1;"
       - "ElasticConfiguration__Uri=http://elasticsearch:9200"
     depends_on:
       discountdb:
         condition: service_healthy
     ports:
-      - "9002:80"
+      - "9002:8080"
 
   #ordering api data context configs, providing appsettings.json values to container context including sqlserver settings
   ordering.api:
     container_name: ordering.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://0.0.0.0:80
       - "ConnectionStrings__OrderingConnectionString=Server=orderingdb;Database=OrderingDb;User Id=sa;Password=Lucas*12345;TrustServerCertificate=True"
       - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672"
       - "ElasticConfiguration__Uri=http://elasticsearch:9200"
@@ -160,7 +156,7 @@ services:
       - orderingdb
       - rabbitmq
     ports:
-      - "9003:80"
+      - "9003:8080"
 
   #elastic search configs, providing tools to search and manage log files from serilog
   elasticsearch:
