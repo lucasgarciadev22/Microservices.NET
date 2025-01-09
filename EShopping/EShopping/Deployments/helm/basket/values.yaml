@@ -12,6 +12,7 @@ image:
   tag: "v1"
 
 imagePullSecrets:
+  #inner resource created to store secrets for azure container registry
   - name: acr-secret
 
 nameOverride: ""
@@ -20,10 +21,12 @@ fullnameOverride: "basket"
 podAnnotations:
   sidecar.istio.io/inject: "false"
 
-podSecurityContext: {}
+podSecurityContext:
+  {}
   # fsGroup: 2000
 
-securityContext: {}
+securityContext:
+  {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -50,7 +53,6 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
 
-
 nodeSelector: {}
 
 tolerations: []
@@ -60,8 +62,8 @@ affinity: {}
 # env defines the environment variables that will be declared in the pod
 env:
   values:
-  - name: ASPNETCORE_ENVIRONMENT
-    value: Development
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Development
   urls:
   # configmap declares variables which value is taken from the config map defined in template configmap.yaml (name is name of var and key the key in configmap).
   configmap:
